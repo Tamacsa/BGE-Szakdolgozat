@@ -62,4 +62,16 @@ def tickerek(cim_lead: str, teljes: str) ->tuple[list[str], list[str]]:
             gyenge.append(t)
     return eros, gyenge
 
+_HORGONY_SZAM= re.compile(r"\d[u00a0 .,]{1,}]\d|\d{3,}")
+_HORGONY_NEV = re.compile(r"\b[A-ZÁÉÍÓÖŐÚÜŰ][A-ZÁÉÍÓÖŐÚÜŰ0-9]{1,}\b"
+                          r"|\b[A-ZÁÉÍÓÖŐÚÜŰ][a-záéíóöőúüű]{3,}\b")
+_HORGONY_STOP={
+    "@rendkí", "@tájéko", "@budape", "@magyar", "@szerző", "@csatol",
+    "@nyrt", "@zrt", "@kft", "@english", "@version",
+}
 
+def _HORGONY(szoveg: str| None) -> frozenset[str]:
+    s=szoveg or ""
+    ki=set()
+    for m in _HORGONY_SZAM.finditer(s):
+        t=re
