@@ -6,7 +6,8 @@ BAZIS=Path(__file__).resolve().parent
 ADAT=BAZIS/"adat"
 NYERS=BAZIS/"nyers"
 ADATBAZIS=ADAT/"korpusz.sqlite"
-
+ADAT.mkdir(parents=True, exist_ok=True)
+NYERS.mkdir(parents=True, exist_ok=True)
 IZ=ZoneInfo("Europe/Budapest")
 
 TICKEREK = {
@@ -27,13 +28,14 @@ TICKEREK = {
         "nev":"Richter Gedeon Nyrt.",
         "isin":"HU0000123096",
         "eros":[r"\bRICHTER\b"],
-        "gyenge":[r"\b(Gdeon )? Richter\w*"],
+        "gyenge":[r"\b(Gedeon )?Richter\w*"],
     },
     "MTELEKOM":{
-        "nev":"OTP Bank Nyrt.",
-        "isin":"HU0000061726",
-        "eros":[r"\bOTP\b"],
-        "gyenge":[r"\bOTP\b"],
+        "nev":"Magyar Telekom Nyrt.",
+        "isin":"HU0000073507",
+        "eros":[r"\bMTEL\b",r"\bMTELEKOM\b"],
+        "gyenge":[r"\bMagyar Telekom\w*",
+                  r"\bTelekom[- ]?(részvény|papír|csoport)\w*"],
     }
 
 
