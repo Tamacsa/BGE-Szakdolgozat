@@ -9,6 +9,7 @@ ADATBAZIS=ADAT/"korpusz.sqlite"
 ADAT.mkdir(parents=True, exist_ok=True)
 NYERS.mkdir(parents=True, exist_ok=True)
 IZ=ZoneInfo("Europe/Budapest")
+#időzóna =IZ
 
 TICKEREK = {
     "OTP":{
