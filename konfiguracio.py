@@ -41,3 +41,22 @@ TICKEREK = {
 
 
 }
+RELEVANS_KIZARO={
+    "MOL":[r"\bMOL Aréna\b", r"\bMOL[- ]Fehérvár\b",r"\bMOL Bubi\b",
+           r"MOL Vidi\b",r"\bMOL Magyar Kupa\b",r"\bPuskás Aréna\b.*\bMOL\b"],
+    "RICHTER":[r"\bRichter[- ]skál", r"\bRichter[- ]érték",
+                r"\bCharles Richter\b", r"\bRichter Sándor\b",
+                r"\bHans Werner Richter\b"],
+    "MTELEKOM":[],
+    "OTP":[],
+
+}
+RELEVANS_PIACI=[
+    r"\btőzsd", r"\brészvény", r"\bárfolyam", r"\bBÉT\b", r"\bBUX\b",
+    r"\bkötvény", r"\bhozam", r"\bosztalék", r"\bgyorsjelentés",
+    r"\bnegyedéves? (?:eredmény|jelentés)", r"\bárbevétel", r"\bnyereség",
+    r"\bveszteség", r"\bEBITDA\b", r"\bkapitalizáci", r"\belemző",
+    r"\bbefektet", r"\bkibocsát", r"\bfelvásárl", r"\bpiaci érték",
+    r"\bközgyűlés", r"\bMNB\b", r"\bjegybank", r"\büzleti (?:év|negyedév)",
+]
+RELEVANS_PIACI_MAX_KAR=1500
