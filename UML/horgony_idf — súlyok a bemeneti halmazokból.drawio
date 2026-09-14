@@ -1,0 +1,81 @@
+<mxfile host="Electron">
+  <diagram name="Oldal-1" id="PrBV9OFsalC6D_HDX8p3">
+    <mxGraphModel dx="567" dy="418" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="SrITjnWSImlf0nkKjXJR-6" edge="1" parent="1" source="SrITjnWSImlf0nkKjXJR-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="SrITjnWSImlf0nkKjXJR-7">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="389" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SrITjnWSImlf0nkKjXJR-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;shapeInside=1;aspect=fixed;" value="" vertex="1">
+          <mxGeometry height="50" width="50" x="364" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="SrITjnWSImlf0nkKjXJR-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;shapeInside=1;aspect=fixed;" value="" vertex="1">
+          <mxGeometry height="50" width="50" x="364" y="830" as="geometry" />
+        </mxCell>
+        <mxCell id="SrITjnWSImlf0nkKjXJR-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;shapeInside=1;aspect=fixed;fillColor=#f5f5f5;gradientColor=#b3b3b3;strokeColor=#666666;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="374" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="SrITjnWSImlf0nkKjXJR-8" edge="1" parent="1" source="SrITjnWSImlf0nkKjXJR-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="SrITjnWSImlf0nkKjXJR-9">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="389.0000000000001" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SrITjnWSImlf0nkKjXJR-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="bemenet: halmazok" vertex="1">
+          <mxGeometry height="60" width="120" x="329" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="SrITjnWSImlf0nkKjXJR-12" edge="1" parent="1" source="SrITjnWSImlf0nkKjXJR-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="SrITjnWSImlf0nkKjXJR-17">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="389.0000000000001" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SrITjnWSImlf0nkKjXJR-9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="n=max(1,len(halmazok))" vertex="1">
+          <mxGeometry height="60" width="141" x="318.5" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="SrITjnWSImlf0nkKjXJR-30" edge="1" parent="1" source="SrITjnWSImlf0nkKjXJR-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="SrITjnWSImlf0nkKjXJR-31">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="388.9999999999999" y="710" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SrITjnWSImlf0nkKjXJR-17" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;dashed=1;dashPattern=8 8;" value="" vertex="1">
+          <mxGeometry height="360" width="360" x="209" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="SrITjnWSImlf0nkKjXJR-22" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="ismétlés minden h" vertex="1">
+          <mxGeometry height="30" width="99" x="230" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="SrITjnWSImlf0nkKjXJR-23" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=default;dashed=1;dashPattern=12 12;" value="" vertex="1">
+          <mxGeometry height="220" width="224" x="277" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="SrITjnWSImlf0nkKjXJR-24" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="ismétlés minden t" vertex="1">
+          <mxGeometry height="30" width="99" x="291" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="SrITjnWSImlf0nkKjXJR-25" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="gyak [t]=gyak.get(t,0)+1" vertex="1">
+          <mxGeometry height="60" width="149" x="315" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="SrITjnWSImlf0nkKjXJR-26" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="SrITjnWSImlf0nkKjXJR-23">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="390" y="320" as="sourcePoint" />
+            <mxPoint x="390" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SrITjnWSImlf0nkKjXJR-27" edge="1" parent="1" source="SrITjnWSImlf0nkKjXJR-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="SrITjnWSImlf0nkKjXJR-25">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="400" as="sourcePoint" />
+            <mxPoint x="380" y="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SrITjnWSImlf0nkKjXJR-32" edge="1" parent="1" source="SrITjnWSImlf0nkKjXJR-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="SrITjnWSImlf0nkKjXJR-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SrITjnWSImlf0nkKjXJR-31" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="IDF számítása minden t-re" vertex="1">
+          <mxGeometry height="60" width="120" x="328.9999999999999" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="SrITjnWSImlf0nkKjXJR-34" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="kimeneti IDF" vertex="1">
+          <mxGeometry height="30" width="60" x="359.5" y="880" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 import re
-
+import math
 import unicodedata
 
 import konfiguracio as K
@@ -85,6 +85,29 @@ def _HORGONY(szoveg: str| None) -> frozenset[str]:
         if len(t)>=3:
             ki.add("@"+t)
     return frozenset(ki-_HORGONY_STOP)
+
+def horgony_idf(halmazok)->dict[str, float]:
+    halmazok=list(halmazok)
+    n=max(1,len(halmazok))
+    gyak: dict[str, float] = {}
+    for h in halmazok:
+        for t in h:
+            gyak[t]=gyak.get(t,0)+1
+    return {t: math.log(n/(1+c)) for t, c in gyak.items()}
+
+def horgony_pont(a:frozenset[str], b:frozenset[str], idf: dict[str, float])->float:
+    kozos=a&b
+    if not kozos:
+        return 0.0
+    alap=max(idf.values(),default=1)
+    sulyoz= lambda h: sum(idf.get(t,alap) for t in h)
+    nevezo=min(sulyoz(a),sulyoz(b))
+    return (sulyoz(kozos)/nevezo) if nevezo>0else 0.0
+
+
+
+
+
 
 if __name__ == "__main__":
     print(_HORGONY("Rendkívüli tájékoztatás. Az OTP Bank Nyrt. részvényeinek árfolyama 39.000 forint volt."))
