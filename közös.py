@@ -1,5 +1,8 @@
 from datetime import datetime, timezone
 import re
+
+import unicodedata
+
 import konfiguracio as K
 from dateutil import parser as datumfelbonto
 import tzdata
@@ -62,7 +65,7 @@ def tickerek(cim_lead: str, teljes: str) ->tuple[list[str], list[str]]:
             gyenge.append(t)
     return eros, gyenge
 
-_HORGONY_SZAM= re.compile(r"\d[u00a0 .,]{1,}]\d|\d{3,}")
+_HORGONY_SZAM= re.compile(r"\d[\d\u00a0 .,]{1,}\d|\d{3,}")
 _HORGONY_NEV = re.compile(r"\b[A-ZÁÉÍÓÖŐÚÜŰ][A-ZÁÉÍÓÖŐÚÜŰ0-9]{1,}\b"
                           r"|\b[A-ZÁÉÍÓÖŐÚÜŰ][a-záéíóöőúüű]{3,}\b")
 _HORGONY_STOP={
@@ -74,4 +77,14 @@ def _HORGONY(szoveg: str| None) -> frozenset[str]:
     s=szoveg or ""
     ki=set()
     for m in _HORGONY_SZAM.finditer(s):
-        t=re
+        t = re.sub(r"[\u00a0 .,]", "", m.group())
+        if len(t)>=3:
+            ki.add("#" +(t.lstrip("0") or "0"))
+    for m in _HORGONY_NEV.finditer(s):
+        t=unicodedata.normalize("NFKC", m.group()).lower()[:6]
+        if len(t)>=3:
+            ki.add("@"+t)
+    return frozenset(ki-_HORGONY_STOP)
+
+if __name__ == "__main__":
+    print(_HORGONY("Rendkívüli tájékoztatás. Az OTP Bank Nyrt. részvényeinek árfolyama 39.000 forint volt."))
