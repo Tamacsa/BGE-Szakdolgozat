@@ -5,7 +5,7 @@ import unicodedata
 
 import konfiguracio as K
 from dateutil import parser as datumfelbonto
-import tzdata
+
 
 
 #időzónaátváltás
@@ -73,7 +73,7 @@ _HORGONY_STOP={
     "@nyrt", "@zrt", "@kft", "@english", "@version",
 }
 
-def _HORGONY(szoveg: str| None) -> frozenset[str]:
+def horgonyok(szoveg: str| None) -> frozenset[str]:
     s=szoveg or ""
     ki=set()
     for m in _HORGONY_SZAM.finditer(s):
@@ -102,12 +102,27 @@ def horgony_pont(a:frozenset[str], b:frozenset[str], idf: dict[str, float])->flo
     alap=max(idf.values(),default=1)
     sulyoz= lambda h: sum(idf.get(t,alap) for t in h)
     nevezo=min(sulyoz(a),sulyoz(b))
-    return (sulyoz(kozos)/nevezo) if nevezo>0else 0.0
+    return (sulyoz(kozos)/nevezo) if nevezo> 0 else 0.0
+
+def par_tipus(a_forras:str,b_forras:str)->str:
+    a_bet,b_bet=a_forras=="bet",b_forras=="bet"
+    if a_bet and b_bet:
+        return "bet->bet"
+    if a_bet:
+        return "bet->portal"
+    if b_bet:
+        return "portal->bet"
+    if a_forras==b_forras:
+        return "azonos portal"
+    return"portal->portal"
 
 
+def ervenyes_par(a_forras:str,b_forras:str)->bool:
+    if b_forras=="bet":
+        return False
+    if a_forras==b_forras:
+        return False
+    return True
 
-
-
-
-if __name__ == "__main__":
-    print(_HORGONY("Rendkívüli tájékoztatás. Az OTP Bank Nyrt. részvényeinek árfolyama 39.000 forint volt."))
+def kereszt_forrasu(tipus:str)->bool:
+    return tipus in ("bet->portal","portal->portal")
