@@ -1,0 +1,44 @@
+<mxfile host="Electron">
+  <diagram name="Oldal-1" id="pcKMnEDyfgzt2PdEFvh-">
+    <mxGraphModel dx="760" dy="501" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ALGAckiArtPjo5xaIAt4-3" edge="1" parent="1" source="ALGAckiArtPjo5xaIAt4-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ALGAckiArtPjo5xaIAt4-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ALGAckiArtPjo5xaIAt4-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;shapeInside=1;aspect=fixed;" value="" vertex="1">
+          <mxGeometry height="80" width="80" x="320" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ALGAckiArtPjo5xaIAt4-5" edge="1" parent="1" source="ALGAckiArtPjo5xaIAt4-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ALGAckiArtPjo5xaIAt4-4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ALGAckiArtPjo5xaIAt4-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Bemenet: url (str)" vertex="1">
+          <mxGeometry height="60" width="120" x="300" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="ALGAckiArtPjo5xaIAt4-7" edge="1" parent="1" source="ALGAckiArtPjo5xaIAt4-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ALGAckiArtPjo5xaIAt4-6" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <UserObject label="SHA-1 hash + hexurl.encode() → hexdigest()" id="ALGAckiArtPjo5xaIAt4-4">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1">
+            <mxGeometry height="60" width="380" x="170" y="360" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="ALGAckiArtPjo5xaIAt4-8" edge="1" parent="1" source="ALGAckiArtPjo5xaIAt4-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="ALGAckiArtPjo5xaIAt4-9">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="360" y="620" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ALGAckiArtPjo5xaIAt4-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Levágás 20 karakterrehexdigest()[:20]" vertex="1">
+          <mxGeometry height="60" width="260" x="230" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="ALGAckiArtPjo5xaIAt4-9" parent="1" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#ff0000;" value="" vertex="1">
+          <mxGeometry height="50" width="60" x="330" y="660" as="geometry" />
+        </mxCell>
+        <mxCell id="ALGAckiArtPjo5xaIAt4-10" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="kimenet: str20 karakteres hex" vertex="1">
+          <mxGeometry height="30" width="184" x="268" y="720" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

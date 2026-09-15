@@ -1,3 +1,4 @@
+import hashlib
 from datetime import datetime, timezone
 import re
 import math
@@ -154,3 +155,13 @@ def bet_szoveg_tisztit(s:str| None)-> str:
     s=_BET_CSATOLMANY.sub(" ", s)
     s=_BET_SABLON.sub(" ", s)
     return re.sub(r"\s+"," ", s).strip()
+
+
+def hash_szoveg(s:str| None)-> str | None:
+    n= normalizal(s)
+    return hashlib.sha1(n.encode()).hexdigest() if n else None
+
+def doc_id(url:str)->str:
+    return hashlib.sha1(url.encode()).hexdigest()[:20]
+
+
