@@ -126,3 +126,31 @@ def ervenyes_par(a_forras:str,b_forras:str)->bool:
 
 def kereszt_forrasu(tipus:str)->bool:
     return tipus in ("bet->portal","portal->portal")
+
+
+#Szövegnormalizálás
+
+_ZAJ= re.compile(r"(kapcsolódó cikk|hirdetés|fotó:|forrás:|címlapkép|"
+    r"iratkozzon fel|kövesse a|további cikkeink)",re.IGNORECASE)
+
+def normalizal(s: str | None)-> str:
+    s=unicodedata.normalize("NFC", s or "").lower()
+    s=re.sub(r"https?://\S+", " ", s)
+    s=_ZAJ.sub(" ", s)
+    s=re.sub(r"[^0-9a-záéíóöőúüű ]+", " ", s)
+    return re.sub(r"\s+", " ",s).strip()
+
+_BET_FEJLEC = re.compile( r"^.{0,80}?\d{4}\.\s*\S+\s*\d{1,2}\.\s*\d{1,2}:\d{2}\s*Szerz[őo]:\s*")
+_BET_CSATOLMANY=re.compile(r"Csatolt dokumentumok:(?:\s*[\w.\-]+\.pdf\s*\(\d+\s*kB\))+", re.IGNORECASE)
+_BET_SABLON=re.compile(r"(English version"
+    r"|Stratégiai és Pénzügyi Divízió Befektetői Kapcsolatok"
+    r"|Hivatkozási szám:\s*\S+"
+    r"|Tel(?:efon)?\.?:\s*\+?[\d\s/\-]{6,}"
+    r"|Fax:\s*\+?[\d\s/\-]{6,})", re.IGNORECASE)
+
+def bet_szoveg_tisztit(s:str| None)-> str:
+    s=re.sub(r"\s+"," ", str(s or "").replace("\u00a0"," ")).strip()
+    s=_BET_FEJLEC.sub("", s)
+    s=_BET_CSATOLMANY.sub(" ", s)
+    s=_BET_SABLON.sub(" ", s)
+    return re.sub(r"\s+"," ", s).strip()
