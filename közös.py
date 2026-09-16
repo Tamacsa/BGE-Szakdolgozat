@@ -1,5 +1,6 @@
 import gzip
 import hashlib
+import json
 import time
 from datetime import datetime, timezone
 import re
@@ -7,6 +8,7 @@ import math
 from urllib.parse import urlparse, urljoin
 from urllib.robotparser import RobotFileParser
 
+from pathlib import Path
 import requests
 import unicodedata
 
@@ -267,3 +269,25 @@ class Kapu:
             b=gzip.decompress(b)
         return b
 KAPU=Kapu()
+
+def sutik_betolt(fajl, alap_domain:str=".portfolio.hu")->int:
+    fajl=Path(fajl)
+    if not fajl.exists():
+        raise SystemExit(f"{fajl.name} nem létezik")
+    adat=json.loads(fajl.read_text(encoding="utf-8"))
+    if isinstance(adat, dict):
+        adat=[{"name":k, "value":v} for k,v in adat.items()]
+
+    alap_suffix=alap_domain.lstrip(".")
+    n= 0
+    for c in adat:
+        if not c.get("name"):
+            continue
+        dom = str(c.get("domain")or alap_domain).strip()
+        if dom == alap_suffix or dom.endswith("." + alap_suffix) or dom == alap_domain:
+            dom = alap_domain
+        KAPU.s.cookies.set(c["name"], c.get("value",""), domain=dom)
+        n+=1
+    return n
+
+
