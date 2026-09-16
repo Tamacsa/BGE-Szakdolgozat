@@ -1,0 +1,96 @@
+<mxfile host="Electron">
+  <diagram name="Oldal-1" id="U8LwWMQoXJWaIJ_Dojvw">
+    <mxGraphModel dx="774" dy="516" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="cM5zehjDpAkuzyhkim7A-1" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="405" y="122.43" />
+              <mxPoint x="400" y="122.43" />
+              <mxPoint x="400" y="155" />
+            </Array>
+            <mxPoint x="405" y="80" as="sourcePoint" />
+            <mxPoint x="405.0000000000002" y="155" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cM5zehjDpAkuzyhkim7A-2" edge="1" parent="1" source="cM5zehjDpAkuzyhkim7A-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="cM5zehjDpAkuzyhkim7A-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5zehjDpAkuzyhkim7A-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Bemenet: url (str)" vertex="1">
+          <mxGeometry height="60" width="120" x="345" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5zehjDpAkuzyhkim7A-4" edge="1" parent="1" source="cM5zehjDpAkuzyhkim7A-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.457;entryY=0.033;entryDx=0;entryDy=0;entryPerimeter=0;" target="cM5zehjDpAkuzyhkim7A-20" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="358" y="430" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cM5zehjDpAkuzyhkim7A-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="host = urlparse(url).netloc" vertex="1">
+          <mxGeometry height="60" width="205" x="260" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5zehjDpAkuzyhkim7A-7" edge="1" parent="1" source="cM5zehjDpAkuzyhkim7A-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="cM5zehjDpAkuzyhkim7A-12" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="358" y="510" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cM5zehjDpAkuzyhkim7A-8" edge="1" parent="1" source="cM5zehjDpAkuzyhkim7A-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="cM5zehjDpAkuzyhkim7A-10">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="530" y="686.52" as="sourcePoint" />
+            <mxPoint x="559.27" y="770" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cM5zehjDpAkuzyhkim7A-10" parent="1" style="ellipse;html=1;shape=endState;fillColor=strokeColor;rotation=45;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="540" y="860" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5zehjDpAkuzyhkim7A-11" edge="1" parent="1" source="cM5zehjDpAkuzyhkim7A-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="cM5zehjDpAkuzyhkim7A-14" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <UserObject label="elt = time.monotonic() - self._utolso.get(host, 0)" id="cM5zehjDpAkuzyhkim7A-12">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1">
+            <mxGeometry height="60" width="349" x="140" y="490" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="cM5zehjDpAkuzyhkim7A-13" edge="1" parent="1" source="cM5zehjDpAkuzyhkim7A-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="cM5zehjDpAkuzyhkim7A-16" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5zehjDpAkuzyhkim7A-23" edge="1" parent="1" source="cM5zehjDpAkuzyhkim7A-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="cM5zehjDpAkuzyhkim7A-22" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5zehjDpAkuzyhkim7A-14" parent="1" style="rhombus;whiteSpace=wrap;html=1;shapeInside=1;rounded=1;" value="elt &lt; d?" vertex="1">
+          <mxGeometry height="100" width="120" x="310" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5zehjDpAkuzyhkim7A-24" edge="1" parent="1" source="cM5zehjDpAkuzyhkim7A-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0;entryDx=0;entryDy=0;" target="cM5zehjDpAkuzyhkim7A-25">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="213" y="910" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cM5zehjDpAkuzyhkim7A-16" parent="1" style="whiteSpace=wrap;html=1;rounded=1;" value="self._utolso[host] = time.monotonic()" vertex="1">
+          <mxGeometry height="60" width="264" x="81" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5zehjDpAkuzyhkim7A-19" parent="1" style="ellipse;fillColor=strokeColor;html=1;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="390" y="60" as="geometry" />
+        </mxCell>
+        <UserObject label="d = self._delay.get(host, ALAP_KESLELTETES)" id="cM5zehjDpAkuzyhkim7A-20">
+          <mxCell parent="1" style="shape=ext;double=1;rounded=1;whiteSpace=wrap;html=1;" vertex="1">
+            <mxGeometry height="80" width="264" x="250" y="360" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="time.sleep(d - elt)" id="cM5zehjDpAkuzyhkim7A-22">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1">
+            <mxGeometry height="60" width="120" x="480" y="647" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="cM5zehjDpAkuzyhkim7A-25" parent="1" style="ellipse;html=1;shape=endState;fillColor=strokeColor;rotation=45;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="198.0032034355964" y="930.0032034355963" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5zehjDpAkuzyhkim7A-27" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="vége (nincs visszatérési érték)" vertex="1">
+          <mxGeometry height="30" width="205" x="120" y="980" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5zehjDpAkuzyhkim7A-28" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Host-onként külön d és elt — egy lassú host várakozása" vertex="1">
+          <mxGeometry height="30" width="205" x="415" y="910" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

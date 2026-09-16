@@ -1,7 +1,13 @@
+import gzip
 import hashlib
+import time
 from datetime import datetime, timezone
 import re
 import math
+from urllib.parse import urlparse, urljoin
+from urllib.robotparser import RobotFileParser
+
+import requests
 import unicodedata
 
 import konfiguracio as K
@@ -165,3 +171,99 @@ def doc_id(url:str)->str:
     return hashlib.sha1(url.encode()).hexdigest()[:20]
 
 
+class Kapu:
+    def __init__(self):
+        self._rp: dict[str, RobotFileParser | None] = {}
+        self._delay: dict[str, float]={}
+        self._utolso: dict[str, float]={}
+        self.s= requests.Session()
+        self.s.headers.update({
+            "User-Agent":K.UA,
+            "Accept-Language": "hu-HU,hu;q=0.9",
+            "Accept-Encoding": "gzip, deflate",
+
+        })
+
+    def _robots(self, url: str) -> RobotFileParser | None:
+        host=urlparse(url).netloc
+        if host in self._rp:
+            return self._rp[host]
+        try:
+            r=self.s.get(urljoin(f"https://{host}","/robots.txt"), timeout=K.TIMEOUT)
+            (K.ADAT/f"robots_{host}.txt").write_text(r.text,encoding="utf-8")
+            rp=RobotFileParser()
+            rp.parse(r.text.splitlines())
+            cd=rp.crawl_delay(K.UA)
+            self._delay[host]=max(K.ALAP_KESLELTETES, float(cd or 0))
+        except Exception:
+            rp=None
+            self._delay[host]=K.ALAP_KESLELTETES
+        self._rp[host]=rp
+        return rp
+
+    def szabad(self,url:str)-> bool:
+        rp=self._robots(url)
+        return True if rp is None else rp.can_fetch(K.UA,url)
+
+    def _var(self, url: str):
+        host= urlparse(url).netloc
+        d=self._delay.get(host, K.ALAP_KESLELTETES)
+        eltelt=time.monotonic()-self._utolso.get(host,0)
+        if eltelt < d:
+            time.sleep(d-eltelt)
+        self._utolso[host]=time.monotonic()
+
+
+
+    def get(self, url:str, robots= True, probak=3, **kwargs):
+        if robots and not self.szabad(url):
+            raise PermissionError(f"robots.txt tiltja: {url}")
+        utolso=None
+        for i in range(probak):
+            self._var(url)
+            try:
+                r = self.s.get(url, timeout=K.TIMEOUT, **kwargs)
+                if 400<=r.status_code<500:
+                    r.raise_for_status()
+                r.raise_for_status()
+                return r
+            except requests.HTTPError as e:
+                if e.response is not None and 400<=e.response.status_code<500:
+                    raise
+                utolso=e
+            except Exception as e:
+                utolso = e
+            if i <probak-1:
+                time.sleep(2**(i+1))
+        raise utolso
+
+    def post(self, url:str, robots= True, probak=3, **kwargs):
+        if robots and not self.szabad(url):
+            raise PermissionError(f"robots.txt tiltja: {url}")
+        utolso = None
+        for i in range(probak):
+            self._var(url)
+            try:
+                r = self.s.post(url, timeout=K.TIMEOUT, **kwargs)
+                if 400<=r.status_code<500:
+                    r.raise_for_status()
+                r.raise_for_status()
+                return r
+            except requests.HTTPError as e:
+                if e.response is not None and 400<=e.response.status_code<500:
+                    raise
+                utolso=e
+            except Exception as e:
+                utolso = e
+            if i <probak-1:
+                time.sleep(2**(i+1))
+        raise utolso
+
+
+    def xml(self, url:str, **kwargs)->bytes:
+        r=self.get(url, **kwargs)
+        b=r.content
+        if url.endswith(".gz") or b[:2]==b"\x1f\x8b":
+            b=gzip.decompress(b)
+        return b
+KAPU=Kapu()
