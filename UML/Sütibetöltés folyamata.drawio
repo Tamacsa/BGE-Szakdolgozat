@@ -1,0 +1,192 @@
+<mxfile host="Electron">
+  <diagram name="Oldal-1" id="I8q4cG-yhqo1X9NelQyJ">
+    <mxGraphModel dx="1520" dy="1002" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="cZ5Epg6NLun_XEho628K-27" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;dashed=1;dashPattern=8 8;" value="" vertex="1">
+          <mxGeometry height="760" width="686" x="74" y="740" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-22" edge="1" parent="1" source="cZ5Epg6NLun_XEho628K-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="cZ5Epg6NLun_XEho628K-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-1" parent="1" style="ellipse;fillColor=strokeColor;html=1;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="399" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-2" parent="1" style="ellipse;html=1;shape=endState;fillColor=strokeColor;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="350" y="1660" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-6" edge="1" parent="1" source="cZ5Epg6NLun_XEho628K-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="cZ5Epg6NLun_XEho628K-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="fájl = Path(fájl)" vertex="1">
+          <mxGeometry height="60" width="120" x="354" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-8" edge="1" parent="1" source="cZ5Epg6NLun_XEho628K-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="cZ5Epg6NLun_XEho628K-7" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-12" edge="1" parent="1" source="cZ5Epg6NLun_XEho628K-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="cZ5Epg6NLun_XEho628K-11" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <UserObject label="fájl.exists()?" id="cZ5Epg6NLun_XEho628K-5">
+          <mxCell parent="1" style="rhombus;whiteSpace=wrap;html=1;shapeInside=1;rounded=1;" vertex="1">
+            <mxGeometry height="80" width="154" x="300" y="270" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="cZ5Epg6NLun_XEho628K-10" edge="1" parent="1" source="cZ5Epg6NLun_XEho628K-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="cZ5Epg6NLun_XEho628K-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-7" parent="1" style="whiteSpace=wrap;html=1;rounded=1;" value="raise SystemExi&lt;div&gt;&quot;fájl nem létezik&quot;t&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="514" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-9" parent="1" style="ellipse;html=1;shape=endState;fillColor=strokeColor;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="560" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-14" edge="1" parent="1" source="cZ5Epg6NLun_XEho628K-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="cZ5Epg6NLun_XEho628K-13" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <UserObject label="adat = json.loads(fájl szövege)" id="cZ5Epg6NLun_XEho628K-11">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1">
+            <mxGeometry height="60" width="284" x="190" y="440" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="cZ5Epg6NLun_XEho628K-16" edge="1" parent="1" source="cZ5Epg6NLun_XEho628K-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="cZ5Epg6NLun_XEho628K-15" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-18" edge="1" parent="1" source="cZ5Epg6NLun_XEho628K-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="cZ5Epg6NLun_XEho628K-17" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-13" parent="1" style="rhombus;whiteSpace=wrap;html=1;shapeInside=1;rounded=1;" value="isinstance(adat, dict)?" vertex="1">
+          <mxGeometry height="80" width="250" x="190" y="545" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-19" edge="1" parent="1" source="cZ5Epg6NLun_XEho628K-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="cZ5Epg6NLun_XEho628K-17">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="607" y="730" />
+              <mxPoint x="510" y="730" />
+              <mxPoint x="510" y="740" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <UserObject label="adat = [{&quot;name&quot;:k,&quot;value&quot;:v} for k,v in adat.items()]" id="cZ5Epg6NLun_XEho628K-15">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1">
+            <mxGeometry height="120" width="186" x="514" y="580" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="cZ5Epg6NLun_XEho628K-29" edge="1" parent="1" source="cZ5Epg6NLun_XEho628K-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="cZ5Epg6NLun_XEho628K-28" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <UserObject label="alap_suffix = alap_domain.lstrip(&quot;.&quot;)" id="cZ5Epg6NLun_XEho628K-17">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1">
+            <mxGeometry height="60" width="194" x="260" y="750" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="cZ5Epg6NLun_XEho628K-23" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="vége (leáll)" vertex="1">
+          <mxGeometry height="30" width="110" x="590" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-26" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="nem (már lista)" vertex="1">
+          <mxGeometry height="30" width="60" x="240" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-31" edge="1" parent="1" source="cZ5Epg6NLun_XEho628K-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="cZ5Epg6NLun_XEho628K-30" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-35" edge="1" parent="1" source="cZ5Epg6NLun_XEho628K-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="cZ5Epg6NLun_XEho628K-34" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-28" parent="1" style="rhombus;whiteSpace=wrap;html=1;shapeInside=1;rounded=1;" value="c.get(&quot;name&quot;)?" vertex="1">
+          <mxGeometry height="80" width="120" x="277" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-33" edge="1" parent="1" source="cZ5Epg6NLun_XEho628K-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0;entryDx=0;entryDy=0;" target="cZ5Epg6NLun_XEho628K-28">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="650" y="880" />
+              <mxPoint x="650" y="820" />
+              <mxPoint x="377" y="820" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-30" parent="1" style="whiteSpace=wrap;html=1;rounded=1;" value="continue(kihagyás, köv. elem)" vertex="1">
+          <mxGeometry height="60" width="120" x="457" y="850" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-39" edge="1" parent="1" source="cZ5Epg6NLun_XEho628K-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="cZ5Epg6NLun_XEho628K-38" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-34" parent="1" style="whiteSpace=wrap;html=1;rounded=1;" value="dom = c.get(&quot;domain&quot;) vagy alap_domain" vertex="1">
+          <mxGeometry height="40" width="284" x="230" y="960" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-41" edge="1" parent="1" source="cZ5Epg6NLun_XEho628K-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="cZ5Epg6NLun_XEho628K-40" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="403" y="1140" />
+              <mxPoint x="390" y="1140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-51" edge="1" parent="1" source="cZ5Epg6NLun_XEho628K-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="cZ5Epg6NLun_XEho628K-50" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-38" parent="1" style="rhombus;whiteSpace=wrap;html=1;shapeInside=1;rounded=1;" value="dom illeszkedikalap_suffix-re?" vertex="1">
+          <mxGeometry height="80" width="142" x="332" y="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-43" edge="1" parent="1" source="cZ5Epg6NLun_XEho628K-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="cZ5Epg6NLun_XEho628K-42" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <UserObject label="KAPU.s.cookies.set(name, value, domain=dom)" id="cZ5Epg6NLun_XEho628K-40">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1">
+            <mxGeometry height="60" width="202" x="230" y="1160" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="cZ5Epg6NLun_XEho628K-45" edge="1" parent="1" source="cZ5Epg6NLun_XEho628K-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="cZ5Epg6NLun_XEho628K-44" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-42" parent="1" style="whiteSpace=wrap;html=1;rounded=1;" value="n += 1" vertex="1">
+          <mxGeometry height="60" width="120" x="312" y="1250" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-47" edge="1" parent="1" source="cZ5Epg6NLun_XEho628K-44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="cZ5Epg6NLun_XEho628K-46" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="500" y="1450" />
+              <mxPoint x="500" y="1575" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-48" edge="1" parent="1" source="cZ5Epg6NLun_XEho628K-44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="cZ5Epg6NLun_XEho628K-28">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="160" y="1450" />
+              <mxPoint x="160" y="880" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-44" parent="1" style="rhombus;whiteSpace=wrap;html=1;shapeInside=1;rounded=1;" value="van mégfeldolgozatlan c?" vertex="1">
+          <mxGeometry height="80" width="152" x="260" y="1380" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-46" parent="1" style="whiteSpace=wrap;html=1;rounded=1;" value="return n" vertex="1">
+          <mxGeometry height="70" width="120" x="300" y="1540" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-49" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=-90;" value="ISMÉTLÉS — minden c ∈ adat sütibejegyzésre" vertex="1">
+          <mxGeometry height="30" width="260" x="55.00000000000001" y="1004.9999999999999" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-52" edge="1" parent="1" source="cZ5Epg6NLun_XEho628K-50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="610" y="1140" />
+              <mxPoint x="390" y="1140" />
+              <mxPoint x="390" y="1160" />
+            </Array>
+            <mxPoint x="390" y="1160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-50" parent="1" style="whiteSpace=wrap;html=1;rounded=1;" value="dom = alap_domain" vertex="1">
+          <mxGeometry height="60" width="120" x="560" y="1050" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-54" edge="1" parent="1" source="cZ5Epg6NLun_XEho628K-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.356;entryY=0.111;entryDx=0;entryDy=0;entryPerimeter=0;" target="cZ5Epg6NLun_XEho628K-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cZ5Epg6NLun_XEho628K-55" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="nem(a lista végére ért)" vertex="1">
+          <mxGeometry height="30" width="130" x="380" y="1460" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
