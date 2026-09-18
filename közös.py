@@ -7,6 +7,7 @@ import re
 import math
 from urllib.parse import urlparse, urljoin
 from urllib.robotparser import RobotFileParser
+import sqlite3
 
 from pathlib import Path
 import requests
@@ -290,4 +291,107 @@ def sutik_betolt(fajl, alap_domain:str=".portfolio.hu")->int:
         n+=1
     return n
 
+SEMA="""
+    PRAGMA journal_mode=WAL;
+    
+    CREATE TABLE IF NOT EXISTS dokumentum (
+    doc_id          TEXT PRIMARY KEY,
+    forras          TEXT NOT NULL,
+    tipus           TEXT NOT NULL,
+    url             TEXT UNIQUE NOT NULL,
+    cim             TEXT,
+    lead            TEXT,
+    szoveg          TEXT,
+    szohossz        INTEGER DEFAULT 0,
+    megjelenes_utc  TEXT,
+    megjelenes_helyi TEXT,
+    ido_forras      TEXT,
+    ido_pontossag   TEXT,
+    modositas_utc   TEXT,
+    ticker_eros     TEXT,
+    ticker_gyenge   TEXT,
+    norm_hash       TEXT,
+    szoveg_forras   TEXT,
+    hozzaferes      TEXT,
+    raw_path        TEXT,
+    letoltve        TEXT
+  );   
+     CREATE INDEX IF NOT EXISTS dok_ido ON dokumentum(megjelenes_utc);
+     CREATE INDEX IF NOT EXISTS dok_forras ON dokumentum(forras);
+     CREATE INDEX IF NOT EXISTS dok_hash ON dokumentum(norm_hash);
+    
+    CREATE TABLE IF NOT EXISTS naplo (
+    url             TEXT PRIMARY KEY,
+    statusz         INTEGER,
+    hiba            TEXT,
+    ido             TEXT
+    );
+    
+    CREATE TABLE IF NOT EXISTS bet_lista_meta (
+    url             TEXT PRIMARY KEY,
+    megjelenes_utc   TEXT,
+    ido_pontossag   TEXT,
+    kibocsato       TEXT,
+    cim_lista       TEXT
+    );
+    
+    CREATE TABLE IF NOT EXISTS kotes(
+    ticker         TEXT NOT NULL,
+    nap            TEXT NOT NULL,
+    sorszam        INTEGER NOT NULL,
+    ts_utc         TEXT NOT NULL,
+    ar             REAL,
+    mennyiseg      REAL,
+    ertek          REAL,
+    PRIMARY KEY (ticker, nap, sorszam) 
+    );
+    
+    CREATE INDEX IF NOT EXISTS kotes_ts ON kotes(ticker, ts_utc);
+    
+    CREATE TABLE IF NOT EXISTS parjelolt (
+    a_id            TEXT, b_id    TEXT,
+    ticker          TEXT,
+    delta_perc      REAL,
+    hasonlosag      REAL,
+    sim_horgony     REAL,
+    sim_word        REAL,
+    par_tipus       TEXT,
+    cimke           TEXT,
+    indoklas        TEXT,
+    PRIMARY KEY (a_id, b_id) 
+    );
+    
+    
+    CREATE TABLE IF NOT EXISTS beagyazas (
+    doc_id         TEXT NOT NULL,
+    modell         TEXT NOT NULL,
+    vek            BLOB NOT NULL,
+    PRIMARY KEY (doc_id, modell) 
+    );
+    """
 
+def db()->sqlite3.Connection:
+    con=sqlite3.connect(K.ADATBAZIS, timeout=60)
+    con.row_factory=sqlite3.Row
+    con.execute("PRAGMA busy_timeout=60000")
+    con.execute("PRAGMA synchronous=NORMAL")
+    con.executescript(SEMA)
+    con.commit()
+    return con
+
+if __name__ == "__main__":
+    con = db()
+
+    print("Táblák:")
+    for sor in con.execute("SELECT name FROM sqlite_master WHERE type='table'").fetchall():
+        print("  ", sor["name"])
+
+    print("Indexek:")
+    for sor in con.execute("SELECT name FROM sqlite_master WHERE type='index'").fetchall():
+        print("  ", sor["name"])
+
+    print("WAL mód:", con.execute("PRAGMA journal_mode").fetchone()[0])
+
+    con.close()
+    db().close()
+    print("Második db() hívás rendben")
