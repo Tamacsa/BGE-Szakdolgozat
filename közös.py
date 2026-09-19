@@ -44,6 +44,9 @@ def ido_felbontas(nyers: str | None):
         pont= "nap"
     return utc(dt),pont
 
+def iso(dt: datetime | None) -> str|None:
+    return dt.isoformat().replace("+00:00", "Z") if dt else None
+
 _GYENGE,_EROS,_KIZARO={},{},{}
 for t,d,in K.TICKEREK.items():
     _EROS[t] = [re.compile(p) for p in d["eros"]]
@@ -192,7 +195,7 @@ class Kapu:
         if host in self._rp:
             return self._rp[host]
         try:
-            r=self.s.get(urljoin(f"https://{host}","/robots.txt"), timeout=K.TIMEOUT)
+            r=self.s.get(urljoin(f"https://{host}","/robots.txt"), timeout=K.TULLEPES)
             (K.ADAT/f"robots_{host}.txt").write_text(r.text,encoding="utf-8")
             rp=RobotFileParser()
             rp.parse(r.text.splitlines())
@@ -225,7 +228,7 @@ class Kapu:
         for i in range(probak):
             self._var(url)
             try:
-                r = self.s.get(url, timeout=K.TIMEOUT, **kwargs)
+                r = self.s.get(url, timeout=K.TULLEPES, **kwargs)
                 if 400<=r.status_code<500:
                     r.raise_for_status()
                 r.raise_for_status()
@@ -247,7 +250,7 @@ class Kapu:
         for i in range(probak):
             self._var(url)
             try:
-                r = self.s.post(url, timeout=K.TIMEOUT, **kwargs)
+                r = self.s.post(url, timeout=K.TULLEPES, **kwargs)
                 if 400<=r.status_code<500:
                     r.raise_for_status()
                 r.raise_for_status()
@@ -379,19 +382,78 @@ def db()->sqlite3.Connection:
     con.commit()
     return con
 
-if __name__ == "__main__":
-    con = db()
+def ment_dokumentum(con, rec:dict):
+    rec=dict(rec)
+    for k in ("ticker_eros", "ticker_gyenge"):
+        if isinstance(rec.get(k), (list, tuple)):
+            rec[k] = json.dumps(rec[k], ensure_ascii=False)
+    oszlopok=[r[1] for r in con.execute("PRAGMA table_info(dokumentum)")]
+    rec={k: v for k, v in rec.items() if k in oszlopok}
+    q=(f"INSERT OR REPLACE INTO dokumentum({','.join(rec)}) "
+       f"VALUES ({','.join('?'* len(rec))})")
+    con.execute(q, list(rec.values()))
 
-    print("Táblák:")
-    for sor in con.execute("SELECT name FROM sqlite_master WHERE type='table'").fetchall():
-        print("  ", sor["name"])
 
-    print("Indexek:")
-    for sor in con.execute("SELECT name FROM sqlite_master WHERE type='index'").fetchall():
-        print("  ", sor["name"])
+def naplo(con,url, statusz=None, hiba=None):
+    con.execute("INSERT OR REPLACE INTO naplo VALUES (?,?,?,?)",
+                (url, statusz, (hiba or "")[:300],iso(datetime.now(timezone.utc))))
 
-    print("WAL mód:", con.execute("PRAGMA journal_mode").fetchone()[0])
+
+
+def mar_letoltve(con, url)-> bool:
+    r=con.execute("SELECT statusz FROM naplo WHERE url=?",(url,)).fetchone()
+    return bool(r and r['statusz']==200)
+
+
+def ment_nyers(alkonytar: str, kulcs: str, tartalom: str, kiterj="html")-> str:
+    d=K.NYERS/ alkonytar
+    d.mkdir(parents=True, exist_ok=True)
+    p=d/f"{hashlib.md5(kulcs.encode("utf-8")).hexdigest()[:12]}.{kiterj}"
+    p.write_text(tartalom, encoding="utf-8")
+    return str(p.relative_to(K.BAZIS))
+
+def ment_nyers_bin(alkonytar: str, kulcs: str, tartalom: bytes, kiterj="pdf")-> str:
+    d=K.NYERS/ alkonytar
+    d.mkdir(parents=True, exist_ok=True)
+    p=d/f"{hashlib.md5(kulcs.encode("utf-8")).hexdigest()[:12]}.{kiterj}"
+    p.write_bytes(tartalom)
+    return str(p.relative_to(K.BAZIS))
+
+if __name__=="__main__":
+    import shutil
+    K.ADATBAZIS=K.ADAT/"teszt.sqlite"
+    con=db()
+    url="https://pelda.hu/cikk"
+    rec={"doc_id":doc_id(url),"forras":"portfolio","tipus":"cikk",
+         "url":url,"cim":"Teszt cím",
+         "ticker_eros":["OTP","MOL"],"nincs_ilyen_oszlop":123}
+    ment_dokumentum(con, rec)
+    ment_dokumentum(con, rec)
+    con.commit()
+    db_sor=con.execute("SELECT COUNT(*) FROM dokumentum").fetchone()[0]
+    assert db_sor==1, f"{db_sor} db sor van"
+    tarolt =con.execute("SELECT ticker_eros FROM dokumentum").fetchone()["ticker_eros"]
+    assert json.loads(tarolt)==["OTP","MOL"], tarolt
+    print("ment_dokumentum: rendben (1 sor, lista visszaolvasható, ismeretlen kulcs eldobva)")
+
+    assert mar_letoltve(con, url) is False
+    naplo(con, url, 404, "nem található")
+    assert mar_letoltve(con, url) is False
+    naplo(con, url, 200)
+    assert mar_letoltve(con, url) is True
+    print("mar_letoltve: rendben (False -> 404 -> False -> 200 -> True)")
+
+    p1=ment_nyers('_teszt', url, "<html>ő ű</html>")
+    p2=ment_nyers('_teszt', url, "<html>ő ű</html>")
+    assert p1==p2, (p1, p2)
+    assert not Path(p1).is_absolute()
+    assert (K.BAZIS / p1).exists()
+    assert (K.BAZIS / p1).read_text(encoding="utf-8") == "<html>ő ű</html>"
+    p3 = ment_nyers_bin("_teszt", url, b"%PDF-1.4", "pdf")
+    assert p3.endswith(".pdf") and (K.BAZIS / p3).read_bytes() == b"%PDF-1.4"
+    print("ment_nyers*: rendben (azonos útvonal, relatív, tartalom megvan):", p1)
 
     con.close()
-    db().close()
-    print("Második db() hívás rendben")
+    K.ADATBAZIS.unlink()
+    shutil.rmtree(K.NYERS / "_teszt")
+    print("Minden teszt rendben, takarítás kész")

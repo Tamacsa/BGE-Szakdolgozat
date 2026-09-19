@@ -1,0 +1,123 @@
+<mxfile host="Electron">
+  <diagram name="Oldal-1" id="4QM0iyghNOw-a_gj0cGU">
+    <mxGraphModel dx="435" dy="579" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;dashed=1;dashPattern=8 8;" value="" vertex="1">
+          <mxGeometry height="190" width="405" x="322.5" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-33" edge="1" parent="1" source="gUfsg-KJnogQ1Kni5K5A-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="gUfsg-KJnogQ1Kni5K5A-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-2" parent="1" style="ellipse;fillColor=strokeColor;html=1;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="480" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-3" parent="1" style="ellipse;html=1;shape=endState;fillColor=strokeColor;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="500" y="1080" as="geometry" />
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-9" edge="1" parent="1" source="gUfsg-KJnogQ1Kni5K5A-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="gUfsg-KJnogQ1Kni5K5A-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="rec = dict(rec)másolat, a hívó dictje sértetlen marad" vertex="1">
+          <mxGeometry height="60" width="245" x="380" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-11" edge="1" parent="1" source="gUfsg-KJnogQ1Kni5K5A-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="gUfsg-KJnogQ1Kni5K5A-10" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-32" edge="1" parent="1" source="gUfsg-KJnogQ1Kni5K5A-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="gUfsg-KJnogQ1Kni5K5A-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-8" parent="1" style="rhombus;whiteSpace=wrap;html=1;shapeInside=1;" value="rec[k] listavagy tuple?" vertex="1">
+          <mxGeometry height="80" width="80" x="450" y="225" as="geometry" />
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-36" edge="1" parent="1" source="gUfsg-KJnogQ1Kni5K5A-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="gUfsg-KJnogQ1Kni5K5A-12">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="625" y="330" />
+              <mxPoint x="510" y="330" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <UserObject label="json.dumps(rec[k],&lt;div&gt;ensure_ascii=False&lt;/div&gt;&lt;div&gt;az ékezetek olvashatók)&lt;/div&gt;" id="gUfsg-KJnogQ1Kni5K5A-10">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1">
+            <mxGeometry height="60" width="160" x="565" y="210" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-14" edge="1" parent="1" source="gUfsg-KJnogQ1Kni5K5A-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.449;entryY=0.078;entryDx=0;entryDy=0;entryPerimeter=0;" target="gUfsg-KJnogQ1Kni5K5A-40" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="497.5" y="505" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="oszlopok = PRAGMA table_info(dokumentum)" vertex="1">
+          <mxGeometry height="60" width="150" x="435" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-17" edge="1" parent="1" source="gUfsg-KJnogQ1Kni5K5A-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="gUfsg-KJnogQ1Kni5K5A-16" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="620" y="545" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-21" edge="1" parent="1" source="gUfsg-KJnogQ1Kni5K5A-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="gUfsg-KJnogQ1Kni5K5A-20" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="497.5" y="585" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="ismeretlen kulcseldobva (pl. nincs_ilyen_oszlop)" vertex="1">
+          <mxGeometry height="60" width="120" x="690" y="515" as="geometry" />
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-23" edge="1" parent="1" source="gUfsg-KJnogQ1Kni5K5A-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="gUfsg-KJnogQ1Kni5K5A-22" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-20" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="q = INSERT OR REPLACE INTO dokumentum(...)oszlopnevek: f-stringgel (a saját, szűrt listából)értékek: ? paraméterként (nem kerül az SQL-be)" vertex="1">
+          <mxGeometry height="60" width="355" x="390" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-25" edge="1" parent="1" source="gUfsg-KJnogQ1Kni5K5A-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="gUfsg-KJnogQ1Kni5K5A-24" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <UserObject label="con.execute(q, list(rec.values())" id="gUfsg-KJnogQ1Kni5K5A-22">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1">
+            <mxGeometry height="60" width="190" x="465" y="720" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-27" edge="1" parent="1" source="gUfsg-KJnogQ1Kni5K5A-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="gUfsg-KJnogQ1Kni5K5A-26" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-29" edge="1" parent="1" source="gUfsg-KJnogQ1Kni5K5A-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="gUfsg-KJnogQ1Kni5K5A-28" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-24" parent="1" style="rhombus;whiteSpace=wrap;html=1;shapeInside=1;rounded=1;" value="van már sor ezzela doc_id / url-lel?" vertex="1">
+          <mxGeometry height="80" width="235" x="414" y="825" as="geometry" />
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-31" edge="1" parent="1" source="gUfsg-KJnogQ1Kni5K5A-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="gUfsg-KJnogQ1Kni5K5A-28">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="720" y="930" />
+              <mxPoint x="525" y="930" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-26" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="a régi sor helyéreaz új kerül (felülírás)" vertex="1">
+          <mxGeometry height="60" width="120" x="707" y="835" as="geometry" />
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-30" edge="1" parent="1" source="gUfsg-KJnogQ1Kni5K5A-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="gUfsg-KJnogQ1Kni5K5A-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-28" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="nincs commit a függvénybena hívó dönt (kötegelt mentésnél gyorsab" vertex="1">
+          <mxGeometry height="60" width="205" x="465" y="950" as="geometry" />
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-34" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="ISMÉTLÉS: k ∈ (ticker_eros, ticker_gyenge)" vertex="1">
+          <mxGeometry height="30" width="190" x="315" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-37" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="igen" vertex="1">
+          <mxGeometry height="30" width="60" x="520" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-38" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="nem, marad ahogy volt" vertex="1">
+          <mxGeometry height="30" width="110" x="380" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="gUfsg-KJnogQ1Kni5K5A-40" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="rec = {k: v ... if k in oszlopok}csak valódi oszlopok maradnak" vertex="1">
+          <mxGeometry height="60" width="150" x="435" y="515" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

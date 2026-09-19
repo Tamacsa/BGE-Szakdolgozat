@@ -1,0 +1,5 @@
+.env
+nyers/
+adat/
+__pycache__/
+.idea/

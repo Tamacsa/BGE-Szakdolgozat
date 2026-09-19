@@ -1,7 +1,9 @@
+import os
 from pathlib import Path
 from zoneinfo import ZoneInfo
+from dotenv import load_dotenv
 
-
+load_dotenv()
 BAZIS=Path(__file__).resolve().parent
 ADAT=BAZIS/"adat"
 NYERS=BAZIS/"nyers"
@@ -10,6 +12,11 @@ ADAT.mkdir(parents=True, exist_ok=True)
 NYERS.mkdir(parents=True, exist_ok=True)
 IZ=ZoneInfo("Europe/Budapest")
 #időzóna =IZ
+TULLEPES=30
+ALAP_KESLELTETES=2.5
+KAPCSOLAT=os.getenv("KAPCSOLAT_EMAIL","ismeretlen@email.hu")
+UA = (f"Mozilla/5.0 (compatible; SzakdolgozatKutatas/1.0; "
+      f"egyetemi kutatasi celu adatgyujtes; kapcsolat: {KAPCSOLAT})")
 
 TICKEREK = {
     "OTP":{
