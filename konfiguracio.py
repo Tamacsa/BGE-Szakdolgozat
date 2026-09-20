@@ -67,3 +67,7 @@ RELEVANS_PIACI=[
     r"\bközgyűlés", r"\bMNB\b", r"\bjegybank", r"\büzleti (?:év|negyedév)",
 ]
 RELEVANS_PIACI_MAX_KAR=1500
+
+BET_BAZIS = "https://www.bet.hu"
+BET_KERESO = "https://www.bet.hu/kereso?category=NEWS_NOT_BET"
+BET_LISTA = "https://www.bet.hu/kib_hirek"
