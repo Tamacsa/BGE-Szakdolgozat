@@ -71,3 +71,16 @@ RELEVANS_PIACI_MAX_KAR=1500
 BET_BAZIS = "https://www.bet.hu"
 BET_KERESO = "https://www.bet.hu/kereso?category=NEWS_NOT_BET"
 BET_LISTA = "https://www.bet.hu/kib_hirek"
+
+BET_KIBOCSATOK={
+    "OTP":      "OTP Bank Nyrt.",
+    "MOL":      "MOL Nyrt.",
+    "RICHTER":  "Richter Gedeon Nyrt.",
+    "MTELEKOM": "Magyar Telekom Nyrt.",
+}
+BET_KERES={
+    "OTP":      "OTP",
+    "MOL":      "MOL",
+    "RICHTER":  "Richter",
+    "MTELEKOM": "Telekom",
+}
