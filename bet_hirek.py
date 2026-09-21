@@ -96,3 +96,27 @@ def _tokenek()->tuple[list[str], str]:
     return jeloltek, csrf
 
 
+def _keres(url: str, **mezok):
+    return KÖ.KAPU.s.post(url, json=dict(API_TORZS, **mezok), timeout=K.TULLEPES)
+
+
+def _mukodo_url()->str:
+    jeloltek, csrf = _tokenek()
+    for rspid in jeloltek:
+        url = API_SABLON.format(rspid=rspid, csrf=csrf)
+        try:
+            r=_keres(url)
+            tetelek, _ = _elemek_valaszbol(r.text)
+            if r.status_code == 200 and tetelek:
+                print(f"mukodo portlet: {rspid}")
+                return url
+        except Exception:
+        continue
+    raise RuntimeError(
+        f" A {len(jeloltek)} számó jelöl tegyike sem működött"
+
+        )
+
+def _elemek_valaszbol(valami):
+
+    return valami
