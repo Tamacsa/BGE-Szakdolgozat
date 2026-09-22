@@ -1,0 +1,89 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Oldal-1" id="Sc6kXqFZrk8xNYlTjpmQ">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-28" edge="1" parent="1" source="FdULYJhJJKgIyXFBOUQ2-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="FdULYJhJJKgIyXFBOUQ2-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-1" parent="1" style="ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=default;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="384" y="-1140" as="geometry" />
+        </mxCell>
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-3" parent="1" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=light-dark(#FF0000,#FFFFFF);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="390" y="-320" as="geometry" />
+        </mxCell>
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-8" edge="1" parent="1" source="FdULYJhJJKgIyXFBOUQ2-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="FdULYJhJJKgIyXFBOUQ2-9">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="520" y="-1030" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-12" edge="1" parent="1" source="FdULYJhJJKgIyXFBOUQ2-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="FdULYJhJJKgIyXFBOUQ2-13" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="399" y="-900" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-6" parent="1" style="rhombus;whiteSpace=wrap;html=1;shapeInside=1;" value="xhr vagy fetch?" vertex="1">
+          <mxGeometry height="80" width="149" x="320" y="-1060" as="geometry" />
+        </mxCell>
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-9" parent="1" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=light-dark(#FF0000,#FFFFFF);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="540" y="-1045" as="geometry" />
+        </mxCell>
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-15" edge="1" parent="1" source="FdULYJhJJKgIyXFBOUQ2-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="FdULYJhJJKgIyXFBOUQ2-14" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Válasz szövegének olvasása" vertex="1">
+          <mxGeometry height="60" width="120" x="339" y="-940" as="geometry" />
+        </mxCell>
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-17" edge="1" parent="1" source="FdULYJhJJKgIyXFBOUQ2-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="FdULYJhJJKgIyXFBOUQ2-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-19" edge="1" parent="1" source="FdULYJhJJKgIyXFBOUQ2-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="FdULYJhJJKgIyXFBOUQ2-18" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-14" parent="1" style="rhombus;whiteSpace=wrap;html=1;shapeInside=1;rounded=1;" value="olvasható?" vertex="1">
+          <mxGeometry height="80" width="80" x="359" y="-850" as="geometry" />
+        </mxCell>
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-16" parent="1" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=light-dark(#FF0000,#FFFFFF);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="550" y="-825" as="geometry" />
+        </mxCell>
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-21" edge="1" parent="1" source="FdULYJhJJKgIyXFBOUQ2-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="FdULYJhJJKgIyXFBOUQ2-20" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-18" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Kérés jegyzetének összeállítása" vertex="1">
+          <mxGeometry height="60" width="120" x="339" y="-740" as="geometry" />
+        </mxCell>
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-23" edge="1" parent="1" source="FdULYJhJJKgIyXFBOUQ2-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="FdULYJhJJKgIyXFBOUQ2-22" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-20" parent="1" style="whiteSpace=wrap;html=1;rounded=1;" value="Kérés mentése nyersként" vertex="1">
+          <mxGeometry height="60" width="120" x="339" y="-650" as="geometry" />
+        </mxCell>
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-26" edge="1" parent="1" source="FdULYJhJJKgIyXFBOUQ2-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="FdULYJhJJKgIyXFBOUQ2-25" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-22" parent="1" style="whiteSpace=wrap;html=1;rounded=1;" value="Válasz mentése nyersként" vertex="1">
+          <mxGeometry height="60" width="120" x="339" y="-550" as="geometry" />
+        </mxCell>
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-27" edge="1" parent="1" source="FdULYJhJJKgIyXFBOUQ2-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="FdULYJhJJKgIyXFBOUQ2-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-25" parent="1" style="whiteSpace=wrap;html=1;rounded=1;" value="Hozzáadás a találatlistához" vertex="1">
+          <mxGeometry height="60" width="120" x="339" y="-450" as="geometry" />
+        </mxCell>
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-29" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="nem" vertex="1">
+          <mxGeometry height="30" width="60" x="490" y="-1075" as="geometry" />
+        </mxCell>
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-30" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="igen" vertex="1">
+          <mxGeometry height="30" width="60" x="439" y="-980" as="geometry" />
+        </mxCell>
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-31" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="nem" vertex="1">
+          <mxGeometry height="30" width="60" x="490" y="-840" as="geometry" />
+        </mxCell>
+        <mxCell id="FdULYJhJJKgIyXFBOUQ2-32" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="igen" vertex="1">
+          <mxGeometry height="30" width="60" x="399" y="-780" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
