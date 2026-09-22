@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-API_SABLON=os.getenv("API_SABLON","https://www.valami.hu/kereso/{rspid}/$risearch?_csrf={csrf}")
+API_SABLON=os.getenv("API_SABLON")
 API_TORZS= {
     "query": "*",
     "facets": ["bet_date", "bet_type", "bet_issuer_f", "bet_tag",
@@ -132,9 +132,7 @@ def _mukodo_url()->str:
 
         )
 
-def _elemek_valaszbol(valami):
 
-    return valami
 
 def api_teszt_lepes():
     jeloltek, csrf = _tokenek()
@@ -172,7 +170,7 @@ def api_teszt_lepes():
                 tetelek, pc=_elemek_valaszbol(r.text)
                 elso= tetelek[0]["kibocsato"] if tetelek else"-"
                 jo=" OK " if elso == nev else "--"
-                varhato=_facet_szam(r.text,"bet_issuer_f",nev)
+                varhato=_szurok_szamlaloja(r.text,"bet_issuer_f",nev)
                 print(f"{jo}{cimke:<18} HTTP {r.status_code} | "
                       f"{len(tetelek)} tétel | {pc} oldal | "
                       f" facet: {varhato}| elso kibocsatok: {elso}")
@@ -181,5 +179,86 @@ def api_teszt_lepes():
     print("\n-> Kibocsátónként az 'OK' alak a jó; ezt állítsa be a ")
     print("a BET_KERES és BET_KIBOCSATOK értékeknél" )
 
-def _facet_szam(valami, valami2, valami3):
-    pass
+
+
+def _elemek_elemzese(adat_html: str )->dict|None:
+    soup = BeautifulSoup(adat_html, "lxml")
+    a= soup.find("a",href=True)
+    if a is None:
+        return None
+    kib=soup.find(class_="issuer")
+    dat=soup.find(class_="list-date")
+    cim= soup.find(class_="title")
+    href=a["href"]
+    return{
+        "url": href if href.startswith("http") else K.BET_BAZIS+href,
+        "kibocsato":kib.get_text(" ",strip=True) if kib else None,
+        "cim":cim.get_text(" ",strip=True) if cim else None,
+        "lista_datum":dat.get_text(" ",strip=True) if dat else None,
+    }
+
+def _elemek_valaszbol(torzs: str) -> tuple[list[dict], int]:
+    try:
+        adat=json.loads(torzs)
+    except Exception:
+        return [],0
+    if not isinstance(adat,dict) or "items" not in adat:
+        return [],0
+    tetelek=[t for t in(_elemek_elemzese(i.get("data", ""))
+                      for i in adat["items"]) if t]
+    return tetelek, int(adat.get("pageCount") or 0)
+
+def _szurok_szamlaloja(torzs: str,mezo: str, ertek: str)->int:
+    try:
+        f=json.loads(torzs).get('facets',{}).get(mezo,[])
+    except Exception:
+        return 0
+    return next((int(x.get("count") or 0)for x in f if x.get("value")==ertek),0)
+
+def _relevans(t:dict)->bool:
+    return (t.get("kibocsato") or "").strip() in K.BET_KIBOCSATOK.values()
+
+def _lista_api(kezd:str, veg:str)->list[str]:
+    url=_mukodo_url()
+    osszes:dict[str,dict]={}
+    for ticker, nev in K.BET_KIBOCSATOK.items():
+        q=K.BET_KERES.get(ticker, nev)
+        talalt,oldal,oldalszam,varhato=0,0,1,None
+        print(f"\n[{ticker}] {nev}   (query={q!r})")
+
+        while oldal <oldalszam and oldal<2000:
+            try:
+                r=_keres(url,query=q, pageIndex=oldal)
+                r.raise_for_status()
+            except Exception as e:
+                print(f" {oldal}. oldal: {str(e)[:90]}")
+                break
+
+            tetelek, pc=_elemek_valaszbol(r.text)
+            if oldal==0:
+                oldalszam= pc or 1
+                varhato=_szurok_szamlaloja(r.text,"bet_issuer_f",nev)
+                print(f" {oldalszam} átnézendő "
+                      f" és ebből {varhato} releváns tétel várható")
+            if not tetelek:
+                break
+
+            for t in tetelek:
+                if t['url'] not in osszes:
+                    osszes[t['url']] = t
+                    if _relevans(t):
+                        talalt+=1
+            oldal+=1
+
+            if varhato and talalt>=varhato:
+                print(f"  megvan mind a {talalt} tetel a {oldal}. oldalon "
+                      f"(a {oldalszam}-bol) - leall")
+                break
+            if oldal % 25 ==0:
+                print(f"{oldal}/{oldalszam} oldal | {talalt}"
+                      + (f"/{varhato}" if varhato else "") + " relevans")
+        if varhato and talalt < varhato:
+            print(f"   HIÁNY: {talalt}/{varhato} - a lapozás korábban "
+                  f"leállt, a korpusz nem teljes")
+    return list(osszes.values())
+
