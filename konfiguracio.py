@@ -47,6 +47,7 @@ TICKEREK = {
     }
 
 
+
 }
 RELEVANS_KIZARO={
     "MOL":[r"\bMOL Aréna\b", r"\bMOL[- ]Fehérvár\b",r"\bMOL Bubi\b",
@@ -84,3 +85,6 @@ BET_KERES={
     "RICHTER":  "Richter",
     "MTELEKOM": "Telekom",
 }
+
+KEZDO_ABLAK="2024-01-01"
+VEGSO_ABLAK="2025-12-31"

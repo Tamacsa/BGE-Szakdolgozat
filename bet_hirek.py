@@ -1,5 +1,7 @@
 import re
 import json
+
+
 from bs4 import BeautifulSoup
 from datetime import datetime,timezone
 import os
@@ -10,7 +12,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 API_SABLON=os.getenv("API_SABLON")
-API_TORZS= {
+API_TORZS = {
     "query": "*",
     "facets": ["bet_date", "bet_type", "bet_issuer_f", "bet_tag",
                "newkib_subjectGroup", "newkib_newssubject"],
@@ -19,11 +21,13 @@ API_TORZS= {
     "orderMode": "RELEVANCE",
     "category": "NEWS_NOT_BET",
     "contentPermission": ["READ"],
-    }
+}
 
 
 _RSPID_RX = re.compile(r"\$rspid[0-9a-fx]+")
-
+_HO = {"jan": 1, "feb": 2, "már": 3, "mar": 3, "ápr": 4, "apr": 4, "máj": 5,
+       "maj": 5, "jún": 6, "jun": 6, "júl": 7, "jul": 7, "aug": 8, "sze": 9,
+       "okt": 10, "nov": 11, "dec": 12}
 
 def proba_lepes(interaktiv: bool=False):
     try:
@@ -221,14 +225,22 @@ def _relevans(t:dict)->bool:
 def _lista_api(kezd:str, veg:str)->list[str]:
     url=_mukodo_url()
     osszes:dict[str,dict]={}
+    facets = [f for f in API_TORZS["facets"] if f != "bet_issuer_f"]
+
+    r0 = _keres(url, query="*", pageIndex=0)
+    adat0 = json.loads(r0.text)
+    facet_szamok = {x["value"]: x["count"] for x in adat0.get("facets", {}).get("bet_issuer_f", [])}
+
     for ticker, nev in K.BET_KIBOCSATOK.items():
-        q=K.BET_KERES.get(ticker, nev)
+
         talalt,oldal,oldalszam,varhato=0,0,1,None
-        print(f"\n[{ticker}] {nev}   (query={q!r})")
+        print(f"\n[{ticker}] {nev}")
 
         while oldal <oldalszam and oldal<2000:
             try:
-                r=_keres(url,query=q, pageIndex=oldal)
+                r = _keres(url, query="*", facets=facets,
+                           ddParams=[{"facet": "bet_issuer_f", "value": nev}],
+                           pageIndex=oldal)
                 r.raise_for_status()
             except Exception as e:
                 print(f" {oldal}. oldal: {str(e)[:90]}")
@@ -237,7 +249,7 @@ def _lista_api(kezd:str, veg:str)->list[str]:
             tetelek, pc=_elemek_valaszbol(r.text)
             if oldal==0:
                 oldalszam= pc or 1
-                varhato=_szurok_szamlaloja(r.text,"bet_issuer_f",nev)
+                varhato = facet_szamok.get(nev, 0)
                 print(f" {oldalszam} átnézendő "
                       f" és ebből {varhato} releváns tétel várható")
             if not tetelek:
@@ -262,3 +274,124 @@ def _lista_api(kezd:str, veg:str)->list[str]:
                   f"leállt, a korpusz nem teljes")
     return list(osszes.values())
 
+def _lista_playwright(kezd=K.KEZDO_ABLAK, veg=K.VEGSO_ABLAK, max_oldal:int=5000)->list[dict]:
+    from playwright.sync_api import sync_playwright
+    osszes: dict[str, dict] = {}
+    allapot = {"oldalak": 0}
+
+    with sync_playwright() as p:
+        b=p.chromium.launch(headless=True)
+        oldal = b.new_page(user_agent=K.UA, locale="hu-HU")
+
+        def valaszra(resp):
+            if "$risearch" not in resp.url:
+                return
+            try:
+                tetelek,oldalszam=_elemek_valaszbol(resp.text())
+            except Exception:
+                return
+            if not tetelek:
+                return
+            if oldalszam:
+                allapot["oldalak"] = oldalszam
+                for t in tetelek:
+                    osszes.setdefault(t['url'], t)
+
+        oldal.on('response', valaszra)
+        oldal.goto(K.BET_KERESO,wait_until="networkidle", timeout=90_000)
+        oldal.wait_for_timeout(3000)
+
+
+        for sel in ("#onetrust-reject-all-handler", "text=Elutasít",
+                    "text=Csak a szükséges"):
+            try:
+                oldal.click(sel,timeout=2000)
+                break
+            except Exception:
+                continue
+        print(f"  talalati oldalak: {allapot['oldalak']}, "
+              f"elso oldal: {len(osszes)} tetel")
+
+        lap=1
+        while lap<min(allapot['oldalak'] or 1,max_oldal):
+            elozo=len(osszes)
+            kattintott=False
+            for sel in ("a[rel=next]", ".pagination .next a",
+                        ".pager-next a", "text=Következő"):
+
+                try:
+                    oldal.click(sel,timeout=4000)
+                    kattintott=True
+                    break
+                except Exception:
+                    continue
+            if not kattintott:
+                print("nincs tovább gombb a kattintás leáll")
+                break
+            oldal.wait_for_timeout(1000)
+            lap+=1
+            if len(osszes)==elozo:
+                print(f"a {lap} oldal nem hozozz új tételt")
+                break
+            if lap%20==0:
+                print(f"  {lap}/{allapot['oldalak']} oldal, {len(osszes)} tetel")
+        b.close()
+    return list(osszes.values())
+
+def lepes_lista(kezd:str=K.KEZDO_ABLAK, veg: str= K.VEGSO_ABLAK, csak_relevans:bool = True):
+    tetelek = (_lista_api(kezd, veg) if API_SABLON
+               else _lista_playwright(kezd, veg))
+    print(f"\n{len(tetelek)} tétel összesen")
+
+    szurt=[t for t in tetelek if _relevans(t)] if csak_relevans else tetelek
+    if csak_relevans:
+        print(f"{len(szurt)} db tétel a négy kibocsátótól")
+    vegleges=[]
+    for t in szurt:
+        dt, pont=_magyar_datum(t.get("lista_datum") or "")
+        if dt is None:
+            continue
+        nap=dt.astimezone(K.IZ).date().isoformat()
+        if kezd <=nap <= veg:
+            t["megjelenes_utc"] = KÖ.iso(dt)
+            t["ido_pontossag"] = pont
+            vegleges.append(t)
+    print(f"{len(vegleges)} tetel a {kezd} .. {veg} ablakban\n")
+
+    con=KÖ.db()
+    for t in vegleges:
+        con.execute("INSERT OR IGNORE INTO naplo (url, statusz, hiba, ido) "
+                    "VALUES (?, NULL, 'bet-varakozik', ?)",
+                    (t['url'],KÖ.iso(datetime.now(timezone.utc))))
+    con.executemany(
+        "INSERT OR REPLACE INTO bet_lista_meta "
+        "(url, megjelenes_utc, ido_pontossag, kibocsato, cim_lista) "
+        "VALUES (:url, :megjelenes_utc, :ido_pontossag, :kibocsato, :cim)",
+        vegleges)
+    con.commit()
+    KÖ.ment_nyers("bet", f"lista_{kezd}_{veg}",
+                  json.dumps(vegleges,ensure_ascii=False, indent=2),"json")
+
+    szamlalo = {}
+    for t in vegleges:
+        szamlalo[t["kibocsato"]] = szamlalo.get(t["kibocsato"], 0) + 1
+    for k, n in sorted(szamlalo.items(), key=lambda x: -x[1]):
+        print(f"  {k}: {n}")
+    return vegleges
+
+
+
+def _magyar_datum(s:str):
+    m = re.search(r"(20\d{2})\.\s*([a-záéíóöőúüű]+)\.?\s*(\d{1,2})\.?"
+                  r"(?:\s*(\d{1,2}):(\d{2}))?", s or "", re.I)
+
+    if not m:
+        return KÖ.ido_felbontas(s)
+    ho=_HO.get(m.group(2)[:3].lower())
+    if not ho:
+        return None,"nincs"
+    if m.group(4):
+        dt = datetime(int(m.group(1)), ho, int(m.group(3)),
+                      int(m.group(4)), int(m.group(5)))
+        return KÖ.utc(dt), "perc"
+    return KÖ.utc(datetime(int(m.group(1)), ho, int(m.group(3)))), "nap"
