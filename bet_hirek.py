@@ -395,3 +395,39 @@ def _magyar_datum(s:str):
                       int(m.group(4)), int(m.group(5)))
         return KÖ.utc(dt), "perc"
     return KÖ.utc(datetime(int(m.group(1)), ho, int(m.group(3)))), "nap"
+
+
+def _pdf_feldolgozas(pdf_url:str)->tuple[str| None,str|None]:
+    try:
+        r=KÖ.KAPU.get(pdf_url)
+    except Exception as e:
+        print(f"    PDF letöltési hiba ({pdf_url}): {str(e)[:80]}")
+        return None, None
+    nyers_ut=KÖ.ment_nyers_bin("bet_pdf",pdf_url,r.content)
+
+
+    try:
+        import pypdf
+        reader=pypdf.PdfReader(io.BytesIO(r.content))
+        oldalak=[o.extract_text() or "" for o in reader.pages]
+        szoveg="\n".join(oldalak).strip()
+    except ImportError:
+        print(" Hiányzik a pypdf csomag: pip install pypdf")
+        return None, nyers_ut
+    except Exception as e:
+        print(f"PDF-szoveg kinyeresi hiba ({pdf_url}): {str(e)[:80]}")
+        return None, nyers_ut
+
+    if not szoveg:
+        print(f" a pdf üres, vagy scannelt és nincs szöveg réteg : {nyers_ut}")
+    return (szoveg or None), nyers_ut
+
+def kozzetetel_elemzo(html:str, url:str, lista_meta:dict | None= None)->dict:
+    soup = BeautifulSoup(html, "lxml")
+    for t in soup(["script", "style", "nav", "footer"]):
+        t.decompose()
+
+    tartalom=soup.find(["main","article"]) or soup
+
+    cim_el=soup.find(["h1","h1"])
+    cim=cim_el.get_text("").strip()
