@@ -1,3 +1,4 @@
+import io
 import re
 import json
 
@@ -8,9 +9,11 @@ import os
 import konfiguracio as K
 import közös as KÖ
 from dotenv import load_dotenv
+from urllib.parse import urljoin
+
 
 load_dotenv()
-
+_KIBOCSATO_TICKER = {nev: ticker for ticker, nev in K.BET_KIBOCSATOK.items()}
 API_SABLON=os.getenv("API_SABLON")
 API_TORZS = {
     "query": "*",
@@ -429,5 +432,85 @@ def kozzetetel_elemzo(html:str, url:str, lista_meta:dict | None= None)->dict:
 
     tartalom=soup.find(["main","article"]) or soup
 
-    cim_el=soup.find(["h1","h1"])
-    cim=cim_el.get_text("").strip()
+    cim_el = tartalom.find(["h1", "h2"])
+    cim = cim_el.get_text(" ", strip=True) if cim_el else None
+
+    pdf_urlok= list(dict.fromkeys(
+        urljoin(url, a["href"]) for a in tartalom.select("a[href]")
+        if a["href"].lower().split("?")[0].endswith(".pdf")
+    ))
+    szoveg_html=tartalom.get_text(" ", strip=True)
+    megj, pont=_magyar_datum(szoveg_html[:400])
+    if megj:
+        ido_forras="bet-részletoldal"
+    elif lista_meta and lista_meta.get("megjelenes_utc"):
+        megj=datetime.fromisoformat(
+            lista_meta["megjelenes_utc"].replace("Z", "+00:00"))
+        pont=lista_meta.get("ido_pontossag") or "nincs"
+        ido_forras="bet-lista"
+    else:
+        ido_forras="nincs"
+
+    pdf_szovegek=[]
+    for purl in pdf_urlok:
+        pdf_szoveg, _nyers_ut=_pdf_feldolgozas(purl)
+        if pdf_szoveg:
+            pdf_szovegek.append((pdf_szoveg))
+
+    if pdf_szovegek:
+        teljes_szoveg = (szoveg_html + "\n\n" + "\n\n".join(pdf_szovegek)).strip()
+        szoveg_forras = "html+pdf"
+    elif pdf_urlok:
+        teljes_szoveg = szoveg_html
+        szoveg_forras = "html (pdf-hiba)"
+    else:
+        teljes_szoveg = szoveg_html
+        szoveg_forras = "html"
+
+    eros, gyenge = KÖ.tickerek(cim or "", f"{cim} {teljes_szoveg}")
+
+    if lista_meta:
+        lista_ticker = _KIBOCSATO_TICKER.get((lista_meta.get("kibocsato") or "").strip())
+        if lista_ticker and lista_ticker not in eros:
+            eros.append(lista_ticker)
+        if lista_ticker and lista_ticker in gyenge:
+            gyenge.remove(lista_ticker)
+    return {
+        "doc_id": KÖ.doc_id(url), "forras": "bet", "tipus": "kozzetetel",
+        "url": url, "cim": cim, "lead": None, "szoveg": teljes_szoveg,
+        "szohossz": len(teljes_szoveg.split()),
+        "megjelenes_utc": KÖ.iso(megj),
+        "megjelenes_helyi": megj.astimezone(K.IZ).isoformat() if megj else None,
+        "ido_forras": ido_forras, "ido_pontossag": pont,
+        "ticker_eros": eros, "ticker_gyenge": gyenge,
+        "norm_hash": KÖ.hash_szoveg(f"{cim} {teljes_szoveg}"),
+        "szoveg_forras": szoveg_forras,
+        "letoltve": KÖ.iso(datetime.now(timezone.utc)),
+    }
+
+def lepes_letolt():
+    con=KÖ.db()
+    sor=con.execute("SELECT url FROM naplo WHERE statusz IS NULL "
+                      "AND hiba='bet-varakozik'").fetchall()
+    print(f"{len(sor)} közzététel letöltése...")
+    for i, r in enumerate(sor,1):
+        url=r["url"]
+        try:
+            meta_sor = con.execute(
+                "SELECT megjelenes_utc, ido_pontossag, kibocsato FROM bet_lista_meta "
+                "WHERE url=?", (url,)).fetchone()
+            lista_meta = dict(meta_sor) if meta_sor else None
+            resp=KÖ.KAPU.get(url)
+            rec=kozzetetel_elemzo(resp.text, url, lista_meta=lista_meta)
+            rec["raw_path"] = KÖ.ment_nyers("bet", url, resp.text)
+            KÖ.ment_dokumentum(con, rec)
+            KÖ.naplo(con, url, resp.status_code)
+
+        except Exception as e:
+            KÖ.naplo(con, url, -1, str(e))
+
+        if i%25==0:
+            con.commit()
+            print(f"  {i}/{len(sor)}")
+    con.commit()
+    print("kész.")
