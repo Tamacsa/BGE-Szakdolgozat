@@ -433,7 +433,8 @@ def kozzetetel_elemzo(html:str, url:str, lista_meta:dict | None= None)->dict:
     tartalom=soup.find(["main","article"]) or soup
 
     cim_el = tartalom.find(["h1", "h2"])
-    cim = cim_el.get_text(" ", strip=True) if cim_el else None
+    bet_tipus = cim_el.get_text(" ", strip=True) if cim_el else None
+    cim = (lista_meta or {}).get("cim_lista") or bet_tipus
 
     pdf_urlok= list(dict.fromkeys(
         urljoin(url, a["href"]) for a in tartalom.select("a[href]")
@@ -477,7 +478,7 @@ def kozzetetel_elemzo(html:str, url:str, lista_meta:dict | None= None)->dict:
             gyenge.remove(lista_ticker)
     return {
         "doc_id": KÖ.doc_id(url), "forras": "bet", "tipus": "kozzetetel",
-        "url": url, "cim": cim, "lead": None, "szoveg": teljes_szoveg,
+        "url": url, "cim": cim, "bet_tipus": bet_tipus, "lead": None, "szoveg": teljes_szoveg,
         "szohossz": len(teljes_szoveg.split()),
         "megjelenes_utc": KÖ.iso(megj),
         "megjelenes_helyi": megj.astimezone(K.IZ).isoformat() if megj else None,
@@ -497,7 +498,7 @@ def lepes_letolt():
         url=r["url"]
         try:
             meta_sor = con.execute(
-                "SELECT megjelenes_utc, ido_pontossag, kibocsato FROM bet_lista_meta "
+                "SELECT megjelenes_utc, ido_pontossag, kibocsato, cim_lista FROM bet_lista_meta "
                 "WHERE url=?", (url,)).fetchone()
             lista_meta = dict(meta_sor) if meta_sor else None
             resp=KÖ.KAPU.get(url)

@@ -301,6 +301,7 @@ SEMA="""
     doc_id          TEXT PRIMARY KEY,
     forras          TEXT NOT NULL,
     tipus           TEXT NOT NULL,
+    forras          TEXT,
     url             TEXT UNIQUE NOT NULL,
     cim             TEXT,
     lead            TEXT,
