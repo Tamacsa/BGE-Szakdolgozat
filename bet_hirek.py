@@ -515,3 +515,5 @@ def lepes_letolt():
             print(f"  {i}/{len(sor)}")
     con.commit()
     print("kész.")
+
+
