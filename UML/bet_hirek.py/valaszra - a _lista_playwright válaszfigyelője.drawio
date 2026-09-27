@@ -1,0 +1,64 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Oldal-1" id="valaszra_1">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="A1" parent="1" style="ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=light-dark(#FF0000,#FFFFFF);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="380" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="A1" target="D1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="D1" parent="1" style="rhombus;whiteSpace=wrap;html=1;shapeInside=1;rounded=1;" value="$risearch az URL-ben?" vertex="1">
+          <mxGeometry height="80" width="130" x="330" y="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e2" edge="1" parent="1" source="D1" target="E1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="150" y="110" /></Array></mxGeometry></mxCell>
+        <mxCell id="l1" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;" value="nem (visszatérés)" vertex="1"><mxGeometry height="30" width="130" x="130" y="80" as="geometry" /></mxCell>
+
+        <mxCell id="e3" edge="1" parent="1" source="D1" target="A2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="l2" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;" value="igen" vertex="1"><mxGeometry height="30" width="50" x="410" y="170" as="geometry" /></mxCell>
+
+        <mxCell id="A2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Tételek kiértékelése a válaszból (_elemek_valaszbol)" vertex="1">
+          <mxGeometry height="60" width="270" x="290" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="A2" target="D2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="D2" parent="1" style="rhombus;whiteSpace=wrap;html=1;shapeInside=1;rounded=1;" value="feldolgozási hiba történt?" vertex="1">
+          <mxGeometry height="80" width="130" x="330" y="300" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e5" edge="1" parent="1" source="D2" target="E1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="150" y="340" /></Array></mxGeometry></mxCell>
+        <mxCell id="l3" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;" value="igen (visszatérés)" vertex="1"><mxGeometry height="30" width="130" x="130" y="310" as="geometry" /></mxCell>
+
+        <mxCell id="e6" edge="1" parent="1" source="D2" target="D3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="l4" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;" value="nem" vertex="1"><mxGeometry height="30" width="50" x="410" y="400" as="geometry" /></mxCell>
+
+        <mxCell id="D3" parent="1" style="rhombus;whiteSpace=wrap;html=1;shapeInside=1;rounded=1;" value="van tétel?" vertex="1">
+          <mxGeometry height="80" width="110" x="335" y="430" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e7" edge="1" parent="1" source="D3" target="E1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="150" y="470" /></Array></mxGeometry></mxCell>
+        <mxCell id="l5" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;" value="nincs (visszatérés)" vertex="1"><mxGeometry height="30" width="130" x="130" y="440" as="geometry" /></mxCell>
+
+        <mxCell id="e8" edge="1" parent="1" source="D3" target="A3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="l6" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;" value="van" vertex="1"><mxGeometry height="30" width="50" x="410" y="530" as="geometry" /></mxCell>
+
+        <mxCell id="A3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="allapot['oldalak'] beállítása; új tételek felvétele az összesítő dict-be (url szerint)" vertex="1">
+          <mxGeometry height="70" width="290" x="285" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="A3" target="E1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="E1" parent="1" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=light-dark(#FF0000,#FFFFFF);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="380" y="680" as="geometry" />
+        </mxCell>
+
+        <mxCell id="note1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;fontStyle=2;" value="A böngésző minden hálózati válasznál meghívja; nem ad vissza értéket, hanem a bezáró (closure) allapot és osszes szótárakat módosítja." vertex="1">
+          <mxGeometry height="70" width="280" x="20" y="600" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

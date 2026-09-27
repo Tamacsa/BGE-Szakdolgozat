@@ -1,0 +1,179 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="_elemek_elemzese" id="seged_1">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontStyle=1;fontSize=16;" value="_elemek_elemzese(adat_html) — egy találatelem HTML-jének elemzése" vertex="1"><mxGeometry height="30" width="600" x="80" y="10" as="geometry" /></mxCell>
+
+        <mxCell id="A1" parent="1" style="ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=light-dark(#FF0000,#FFFFFF);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="380" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="A1" target="A2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="A2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="HTML feldolgozása (BeautifulSoup); első &lt;a href&gt; keresése" vertex="1">
+          <mxGeometry height="60" width="270" x="260" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="A2" target="D1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="D1" parent="1" style="rhombus;whiteSpace=wrap;html=1;shapeInside=1;rounded=1;" value="van &lt;a&gt; hivatkozás?" vertex="1">
+          <mxGeometry height="80" width="120" x="335" y="210" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e3" edge="1" parent="1" source="D1" target="A3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="l1" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;" value="nincs" vertex="1"><mxGeometry height="30" width="50" x="120" y="225" as="geometry" /></mxCell>
+
+        <mxCell id="A3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="None visszaadása" vertex="1">
+          <mxGeometry height="60" width="160" x="30" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="A3" target="E1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="30" y="530" /></Array></mxGeometry></mxCell>
+
+        <mxCell id="e5" edge="1" parent="1" source="D1" target="A4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="l2" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;" value="van" vertex="1"><mxGeometry height="30" width="50" x="410" y="300" as="geometry" /></mxCell>
+
+        <mxCell id="A4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="issuer, list-date és title osztályú elemek kiolvasása (ha vannak)" vertex="1">
+          <mxGeometry height="60" width="270" x="260" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="A4" target="A5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="A5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="URL kiegészítése a BET_BAZIS-szal, ha relatív; dict összeállítása (url, kibocsato, cim, lista_datum) és visszaadása" vertex="1">
+          <mxGeometry height="70" width="270" x="260" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="A5" target="E1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="E1" parent="1" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=light-dark(#FF0000,#FFFFFF);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="380" y="540" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram name="_elemek_valaszbol" id="seged_2">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontStyle=1;fontSize=16;" value="_elemek_valaszbol(torzs) — a keresés teljes JSON-válaszának feldolgozása" vertex="1"><mxGeometry height="30" width="600" x="80" y="10" as="geometry" /></mxCell>
+
+        <mxCell id="B1" parent="1" style="ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=light-dark(#FF0000,#FFFFFF);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="380" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="f1" edge="1" parent="1" source="B1" target="B2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="B2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="JSON értelmezése (json.loads)" vertex="1">
+          <mxGeometry height="60" width="270" x="260" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="f2" edge="1" parent="1" source="B2" target="G1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="G1" parent="1" style="rhombus;whiteSpace=wrap;html=1;shapeInside=1;rounded=1;" value="érvényes és van items kulcs?" vertex="1">
+          <mxGeometry height="90" width="150" x="335" y="210" as="geometry" />
+        </mxCell>
+
+        <mxCell id="f3" edge="1" parent="1" source="G1" target="B3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="l1" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;" value="nem (hibás JSON is)" vertex="1"><mxGeometry height="30" width="140" x="100" y="230" as="geometry" /></mxCell>
+
+        <mxCell id="B3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="([], 0) visszaadása" vertex="1">
+          <mxGeometry height="60" width="160" x="60" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="f4" edge="1" parent="1" source="B3" target="E2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="30" y="530" /></Array></mxGeometry></mxCell>
+
+        <mxCell id="f5" edge="1" parent="1" source="G1" target="B4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="l2" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;" value="igen" vertex="1"><mxGeometry height="30" width="50" x="410" y="320" as="geometry" /></mxCell>
+
+        <mxCell id="B4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Minden elemre: _elemek_elemzese hívása, üresek (None) kiszűrése" vertex="1">
+          <mxGeometry height="60" width="270" x="260" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="f6" edge="1" parent="1" source="B4" target="B5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="B5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="(tétellista, pageCount) visszaadása" vertex="1">
+          <mxGeometry height="60" width="270" x="260" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="f7" edge="1" parent="1" source="B5" target="E2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="E2" parent="1" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=light-dark(#FF0000,#FFFFFF);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="380" y="540" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram name="_szurok_szamlaloja és _relevans" id="seged_3">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title1" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontStyle=1;fontSize=16;" value="_szurok_szamlaloja(torzs, mezo, ertek)" vertex="1"><mxGeometry height="30" width="400" x="60" y="10" as="geometry" /></mxCell>
+
+        <mxCell id="C1" parent="1" style="ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=light-dark(#FF0000,#FFFFFF);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="150" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="g1" edge="1" parent="1" source="C1" target="C2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="C2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="JSON értelmezése, a mezo nevű facet lista kiolvasása" vertex="1">
+          <mxGeometry height="60" width="240" x="45" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="g2" edge="1" parent="1" source="C2" target="H1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="H1" parent="1" style="rhombus;whiteSpace=wrap;html=1;shapeInside=1;rounded=1;" value="hiba történt vagy nincs ilyen érték?" vertex="1">
+          <mxGeometry height="100" width="150" x="90" y="210" as="geometry" />
+        </mxCell>
+
+        <mxCell id="g3" edge="1" parent="1" source="H1" target="C3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="l1" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;" value="igen" vertex="1"><mxGeometry height="30" width="50" x="180" y="330" as="geometry" /></mxCell>
+
+        <mxCell id="C3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="0 visszaadása" vertex="1">
+          <mxGeometry height="60" width="150" x="90" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="g4" edge="1" parent="1" source="C3" target="E3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="g5" edge="1" parent="1" source="H1" target="C4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="l2" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;" value="nem" vertex="1"><mxGeometry height="30" width="50" x="290" y="330" as="geometry" /></mxCell>
+
+        <mxCell id="C4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="A talált érték count mezőjének visszaadása" vertex="1">
+          <mxGeometry height="60" width="180" x="280" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="g6" edge="1" parent="1" source="C4" target="E3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="E3" parent="1" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=light-dark(#FF0000,#FFFFFF);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="150" y="450" as="geometry" />
+        </mxCell>
+
+        <mxCell id="title2" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontStyle=1;fontSize=16;" value="_relevans(t)" vertex="1"><mxGeometry height="30" width="300" x="560" y="10" as="geometry" /></mxCell>
+
+        <mxCell id="C5" parent="1" style="ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=light-dark(#FF0000,#FFFFFF);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="600" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="g7" edge="1" parent="1" source="C5" target="C6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="C6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="t['kibocsato'] (üres, ha nincs) levágása" vertex="1">
+          <mxGeometry height="60" width="220" x="500" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="g8" edge="1" parent="1" source="C6" target="H2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="H2" parent="1" style="rhombus;whiteSpace=wrap;html=1;shapeInside=1;rounded=1;" value="szerepel a K.BET_KIBOCSATOK négy neve között?" vertex="1">
+          <mxGeometry height="100" width="160" x="530" y="210" as="geometry" />
+        </mxCell>
+
+        <mxCell id="g9" edge="1" parent="1" source="H2" target="C7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="l3" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;" value="igen" vertex="1"><mxGeometry height="30" width="50" x="640" y="330" as="geometry" /></mxCell>
+
+        <mxCell id="C7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="True visszaadása" vertex="1">
+          <mxGeometry height="60" width="150" x="565" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="g10" edge="1" parent="1" source="C7" target="E4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="g11" edge="1" parent="1" source="H2" target="C8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="l4" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;" value="nem" vertex="1"><mxGeometry height="30" width="50" x="750" y="330" as="geometry" /></mxCell>
+
+        <mxCell id="C8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="False visszaadása" vertex="1">
+          <mxGeometry height="60" width="150" x="740" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="g12" edge="1" parent="1" source="C8" target="E4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="E4" parent="1" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=light-dark(#FF0000,#FFFFFF);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="650" y="450" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

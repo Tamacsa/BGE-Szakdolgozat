@@ -1,0 +1,100 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Oldal-1" id="pdf_feldolgozas_1">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="A1" parent="1" style="ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=light-dark(#FF0000,#FFFFFF);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="380" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="A1" target="A2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="A2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="PDF letöltése a Kapun át (KÖ.KAPU.get)" vertex="1">
+          <mxGeometry height="60" width="270" x="260" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="A2" target="D1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="D1" parent="1" style="rhombus;whiteSpace=wrap;html=1;shapeInside=1;rounded=1;" value="hiba a letöltésnél?" vertex="1">
+          <mxGeometry height="80" width="120" x="335" y="170" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e3" edge="1" parent="1" source="D1" target="A3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="l1" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;" value="igen" vertex="1"><mxGeometry height="30" width="50" x="130" y="185" as="geometry" /></mxCell>
+
+        <mxCell id="A3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Hiba kiírása; (None, None) visszaadása" vertex="1">
+          <mxGeometry height="60" width="220" x="20" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="A3" target="E1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="20" y="860" /></Array></mxGeometry></mxCell>
+
+        <mxCell id="e5" edge="1" parent="1" source="D1" target="A4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="l2" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;" value="nem" vertex="1"><mxGeometry height="30" width="50" x="410" y="260" as="geometry" /></mxCell>
+
+        <mxCell id="A4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Nyers PDF mentése bináris fájlként (ment_nyers_bin)" vertex="1">
+          <mxGeometry height="60" width="270" x="260" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="A4" target="A5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="A5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Szöveg kinyerése oldalanként (pypdf.PdfReader)" vertex="1">
+          <mxGeometry height="60" width="270" x="260" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="A5" target="D2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="D2" parent="1" style="rhombus;whiteSpace=wrap;html=1;shapeInside=1;rounded=1;" value="hiányzik a pypdf csomag?" vertex="1">
+          <mxGeometry height="80" width="130" x="330" y="480" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e8" edge="1" parent="1" source="D2" target="A6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="l3" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;" value="igen (ImportError)" vertex="1"><mxGeometry height="30" width="110" x="140" y="500" as="geometry" /></mxCell>
+
+        <mxCell id="A6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Figyelmeztetés kiírása (pip install pypdf); (None, nyers_ut) visszaadása" vertex="1">
+          <mxGeometry height="60" width="220" x="20" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="A6" target="E1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="20" y="860" /></Array></mxGeometry></mxCell>
+
+        <mxCell id="e10" edge="1" parent="1" source="D2" target="D3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="l4" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;" value="nem, de más hiba történt" vertex="1"><mxGeometry height="30" width="140" x="470" y="500" as="geometry" /></mxCell>
+
+        <mxCell id="D3" parent="1" style="rhombus;whiteSpace=wrap;html=1;shapeInside=1;rounded=1;" value="egyéb kinyerési hiba történt?" vertex="1">
+          <mxGeometry height="80" width="140" x="480" y="600" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e11" edge="1" parent="1" source="D3" target="A7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="l5" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;" value="igen" vertex="1"><mxGeometry height="30" width="50" x="640" y="615" as="geometry" /></mxCell>
+
+        <mxCell id="A7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Hiba kiírása; (None, nyers_ut) visszaadása" vertex="1">
+          <mxGeometry height="60" width="220" x="590" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="1" source="A7" target="E1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="800" y="860" /></Array></mxGeometry></mxCell>
+
+        <mxCell id="e13" edge="1" parent="1" source="D3" target="D4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="l6" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;" value="nem" vertex="1"><mxGeometry height="30" width="50" x="420" y="700" as="geometry" /></mxCell>
+
+        <mxCell id="D4" parent="1" style="rhombus;whiteSpace=wrap;html=1;shapeInside=1;rounded=1;" value="a kinyert szöveg üres?" vertex="1">
+          <mxGeometry height="80" width="120" x="335" y="740" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e14" edge="1" parent="1" source="D4" target="A8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="l7" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;" value="igen (nincs szöveg réteg)" vertex="1"><mxGeometry height="30" width="160" x="460" y="750" as="geometry" /></mxCell>
+
+        <mxCell id="A8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Figyelmeztetés kiírása (üres/szkennelt PDF)" vertex="1">
+          <mxGeometry height="60" width="220" x="500" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="e15" edge="1" parent="1" source="A8" target="A9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="e16" edge="1" parent="1" source="D4" target="A9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="l8" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;" value="nem" vertex="1"><mxGeometry height="30" width="50" x="380" y="850" as="geometry" /></mxCell>
+
+        <mxCell id="A9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="(szöveg vagy None, nyers_ut) visszaadása" vertex="1">
+          <mxGeometry height="60" width="270" x="335" y="900" as="geometry" />
+        </mxCell>
+        <mxCell id="e17" edge="1" parent="1" source="A9" target="E1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="E1" parent="1" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=light-dark(#FF0000,#FFFFFF);" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="380" y="990" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
