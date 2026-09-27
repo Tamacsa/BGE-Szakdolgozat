@@ -225,7 +225,7 @@ def _szurok_szamlaloja(torzs: str,mezo: str, ertek: str)->int:
 def _relevans(t:dict)->bool:
     return (t.get("kibocsato") or "").strip() in K.BET_KIBOCSATOK.values()
 
-def _lista_api(kezd:str, veg:str)->list[str]:
+def _lista_api(kezd:str, veg:str)->list[dict]:
     url=_mukodo_url()
     osszes:dict[str,dict]={}
     facets = [f for f in API_TORZS["facets"] if f != "bet_issuer_f"]
@@ -456,7 +456,7 @@ def kozzetetel_elemzo(html:str, url:str, lista_meta:dict | None= None)->dict:
     for purl in pdf_urlok:
         pdf_szoveg, _nyers_ut=_pdf_feldolgozas(purl)
         if pdf_szoveg:
-            pdf_szovegek.append((pdf_szoveg))
+            pdf_szovegek.append(pdf_szoveg)
 
     if pdf_szovegek:
         teljes_szoveg = (szoveg_html + "\n\n" + "\n\n".join(pdf_szovegek)).strip()
