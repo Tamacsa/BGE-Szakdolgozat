@@ -88,3 +88,23 @@ BET_KERES={
 
 KEZDO_ABLAK="2024-01-01"
 VEGSO_ABLAK="2025-12-31"
+
+
+PORTALOK= {
+    "portfolio": {
+        "base": "https://www.portfolio.hu",
+        "cimke_alap": "https://www.portfolio.hu/cimke",
+        "cimke_utotag": ["otp", "mol", "richter", "telekom"],
+        "lapozas": "query",
+        "cikk_regex": r"portfolio\.hu/[a-z0-9-]+/\d{8}/[a-z0-9-]+",
+        "lista_szelektor": "article.category-list-article",
+    },
+    "telex": {
+        "base": "https://telex.hu",
+        "cimke_alap": "https://telex.hu/cimke",
+        "cimke_utotag": ["otp", "mol", "richter", "magyar-telekom"],
+        "lapozas": "query-oldal",
+        "cikk_regex": r"telex\.hu/[a-z0-9-]+(?:/[a-z0-9-]+)*/\d{4}/\d{2}/\d{2}/[a-z0-9-]+",
+        "lista_szelektor": "main",
+    },
+}
