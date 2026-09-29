@@ -108,3 +108,8 @@ PORTALOK= {
         "lista_szelektor": "main",
     },
 }
+
+KIZART = (r"/(archivum|cimke|cimkek|tag|szerzo|author|rovat|kereses|kereso|"
+          r"search|galeria|gallery|video|podcast|hirlevel|lead|kep|media|"
+          r"elofizetes|regisztracio|adatvedelem|impresszum|"
+          r"konferencia|conference|allashirdetesek)/")
