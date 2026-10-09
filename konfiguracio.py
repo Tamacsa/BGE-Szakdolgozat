@@ -113,3 +113,11 @@ KIZART = (r"/(archivum|cimke|cimkek|tag|szerzo|author|rovat|kereses|kereso|"
           r"search|galeria|gallery|video|podcast|hirlevel|lead|kep|media|"
           r"elofizetes|regisztracio|adatvedelem|impresszum|"
           r"konferencia|conference|allashirdetesek)/")
+
+MIN_TORZS_SZO=60
+
+COOKIE_FAJL= ADAT / "portfolio_cookies.json"
+
+PORTAL_SUTIK ={
+    'portfolio':COOKIE_FAJL
+}
