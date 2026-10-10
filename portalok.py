@@ -1,5 +1,7 @@
 import json
 import re
+from collections import Counter
+from datetime import datetime, timezone
 from urllib.parse import urlparse
 
 import requests
@@ -9,6 +11,7 @@ import közös as KÖ
 import konfiguracio as K
 KIZART_RX = re.compile(K.KIZART, re.I)
 MIN_SZO=K.MIN_TORZS_SZO
+MAX_CSONKA_SOR = 5
 
 _SZEMET_ATTR = re.compile(
     r"(hirdet|advert|\bads?\b|banner|promo|sponsor|"
@@ -154,6 +157,7 @@ def felderit_cimke(portal:str, cfg:dict, max_lap:int=800)->list[dict]:
     print(f"  [{portal}] cimke-bejáras kész: {len(ki)} cikk-URL "
               f"({len(utotagok)} utótag)")
     return ki
+
 def _jsonld_body(soup:BeautifulSoup)->str|None:
     for sc in soup.find_all("script", type="application/ld+json"):
         try:
@@ -171,6 +175,7 @@ def _jsonld_body(soup:BeautifulSoup)->str|None:
             if isinstance(torzs, str) and torzs.strip():
                 return torzs.strip()
     return None
+
 def _trafi(html: str)->str|None:
     try:
         import trafilatura
@@ -180,6 +185,7 @@ def _trafi(html: str)->str|None:
         return trafilatura.extract(html, include_comments=False, include_tables=False)
     except Exception:
         return None
+
 def _tag_szoveg(soup:BeautifulSoup)->str|None:
     jeloltek = (
         soup.find(attrs={"itemprop": "articleBody"}),
@@ -196,6 +202,7 @@ def _tag_szoveg(soup:BeautifulSoup)->str|None:
         if _szohossz(szoveg)>= MIN_SZO:
             return szoveg
     return None
+
 def _szohossz(szoveg: str | None)->int:
     return len(str(szoveg or "").split())
 
@@ -246,3 +253,150 @@ def kinyer_szoveg(html:str)->tuple[str|None,str]:
     return None, "rovid"
 
 
+def _idobelyeg(soup):
+    jeloltek=[
+        ("article:published_time",
+         soup.find("meta", property="article:published_time")),
+        ("og:published_time", soup.find("meta", property="og:published_time")),
+        ("itemprop:datePublished",
+         soup.find(attrs={"itemprop": "datePublished"})),
+        ("time[datetime]", soup.find("time", attrs={"datetime": True})),
+    ]
+
+    for sc in soup.find_all("script", type="application/ld+json"):
+        try:
+            adat=json.loads(sc.string or "{}")
+        except Exception:
+            continue
+        halom = adat if isinstance(adat, list) else [adat]
+        while halom:
+            it = halom.pop()
+            if isinstance(it, dict):
+                if "@graph" in it:
+                    halom+=it["@graph"] or[]
+                if it.get("datePublished"):
+                    dt,pont=KÖ.ido_felbontas(it["datePublished"])
+                    if dt:
+                        return dt,pont,"json-ld"
+
+    for cimke,tag in jeloltek:
+        if tag is None:
+            continue
+        ertek = (tag.get("content") or tag.get("datetime")
+                 or tag.get_text(strip=True))
+        dt,pont=KÖ.ido_felbontas(ertek)
+        if dt:
+            return dt,pont,cimke
+
+    return None, "nincs", None
+
+def cikk_elemzo(html:str,url:str,portal:str)->dict:
+    soup = BeautifulSoup(html, "lxml")
+    megj,pont,ido_forras=_idobelyeg(soup)
+
+    mod_tag=soup.find("meta", property="article:modified_time")
+    mod,_=KÖ.ido_felbontas(mod_tag.get("content") if mod_tag else None)
+
+    og = soup.find("meta", property="og:title")
+    cim = (og.get("content") if og and og.get("content")
+           else (soup.title.get_text(strip=True) if soup.title else None))
+
+    ogd = soup.find("meta", property="og:description")
+    lead = ogd.get("content") if ogd and ogd.get("content") else None
+
+    szoveg,sz_forras=kinyer_szoveg(html)
+
+    fejlec = " ".join(filter(None, [cim, lead]))
+    teljes = " ".join(filter(None, [cim, lead, szoveg]))
+    eros, gyenge = KÖ.tickerek(fejlec, teljes)
+
+    return {
+        "doc_id": KÖ.doc_id(url), "forras": portal, "tipus": "cikk", "url": url,
+        "cim": cim, "lead": lead, "szoveg": szoveg,
+        "szohossz": _szohossz(szoveg),
+        "megjelenes_utc": KÖ.iso(megj),
+        "megjelenes_helyi": megj.astimezone(K.IZ).isoformat() if megj else None,
+        "ido_forras": ido_forras, "ido_pontossag": pont,
+        "modositas_utc": KÖ.iso(mod),
+        "ticker_eros": eros, "ticker_gyenge": gyenge,
+        "norm_hash": KÖ.hash_szoveg(teljes), "szoveg_forras": sz_forras,
+        "letoltve": KÖ.iso(datetime.now(timezone.utc)),
+    }
+
+
+def _portal_url(url:str)->str:
+    u_host = urlparse(url).netloc.removeprefix("www.")
+    for p, cfg in K.PORTALOK.items():
+        if u_host == urlparse(cfg["base"]).netloc.removeprefix("www."):
+            return p
+    return "?"
+
+def lepes_letolt(limit=None, portal=None):
+    con=KÖ.db()
+    q="SELECT url FROM naplo WHERE (statusz IS NULL or statusz = 0)"
+    if portal:
+        host = urlparse(K.PORTALOK[portal]["base"]).netloc.removeprefix("www.")
+        q += f" AND url LIKE '%{host}%'"
+    if limit:
+        q += f" LIMIT {int(limit)}"
+    sor=con.execute(q).fetchall()
+
+    for p in ([portal] if portal else list(K.PORTALOK)):
+        _portal_sutik(p)
+    print(f"{len(sor)} cikk letöltése...")
+
+    szamlalo=Counter()
+    csonka_sor = 0
+    for i,r in enumerate(sor,1):
+        url=r["url"]
+        try:
+            resp = KÖ.KAPU.get(url)
+            rec = cikk_elemzo(resp.text, url, _portal_url(url))
+
+            if rec["szoveg"] is None:
+                KÖ.naplo(con, url, 0, f"csonka:{rec['szoveg_forras']}")
+                szamlalo["csonka"] += 1
+                csonka_sor += 1
+                if csonka_sor >= MAX_CSONKA_SOR:
+                    print(f"{csonka_sor} csonka oldal egymás után - "
+                          f"a süti valószínűleg lejárt. Exportálj újat, "
+                          f"majd futtasd újra.")
+                    break
+                continue
+            csonka_sor = 0
+            rec["raw_path"] = KÖ.ment_nyers(rec["forras"], url, resp.text)
+            KÖ.ment_dokumentum(con, rec)
+            KÖ.naplo(con, url, resp.status_code)
+            szamlalo[rec["szoveg_forras"] or "nincs"] += 1
+        except Exception as e:
+            KÖ.naplo(con, url, getattr(getattr(e, "response", None),
+                                      "status_code", -1), str(e))
+            szamlalo["HIBA"] += 1
+        if i % 25==0:
+            con.commit()
+            print(f"  {i}/{len(sor)}  {dict(szamlalo)}")
+    con.commit()
+    print("kesz.", dict(szamlalo))
+
+
+
+def lepes_felderites(portal=None, max_lap=800):
+    con = KÖ.db()
+    tetelek = ([(portal, K.PORTALOK[portal])] if portal
+               else list(K.PORTALOK.items()))
+    for p, cfg in tetelek:
+        print(f"\n[{p}] felderítés...")
+        try:
+            urls = felderit_cimke(p, cfg, max_lap)
+        except Exception as e:
+            print(f"  [{p}] HIBA: {e}")
+            continue
+        for u in urls:
+            con.execute(
+                "INSERT OR IGNORE INTO naplo (url, statusz, hiba, ido) "
+                "VALUES (?, NULL, 'varakozik', ?)",
+                (u["url"], KÖ.iso(datetime.now(timezone.utc))))
+        con.commit()
+    n = con.execute("SELECT COUNT(*) c FROM naplo WHERE statusz IS NULL"
+                    ).fetchone()["c"]
+    print(f"\n-> {n} letöltendő URL a sorban.")

@@ -315,7 +315,6 @@ SEMA="""
     ticker_gyenge   TEXT,
     norm_hash       TEXT,
     szoveg_forras   TEXT,
-    hozzaferes      TEXT,
     raw_path        TEXT,
     letoltve        TEXT
   );   
