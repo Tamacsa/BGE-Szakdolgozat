@@ -22,13 +22,13 @@ TICKEREK = {
     "OTP":{
         "nev":"OTP Bank Nyrt.",
         "isin":"HU0000061726",
-        "eros":[r"\bOTP\b"],
+        "eros":[r"\bOTP\b",],
         "gyenge":[r"\bOTP[ \-]?(csoport|Bank|Group)\b"],
     },
     "MOL":{
         "nev":"MOL Nyrt.",
         "isin":"HU0000153937",
-        "eros":[r"\bMOL\b"],
+        "eros":[r"\bMOL\b", r"\bMol\b"],
         "gyenge":[r"\bMOL[ \-]?(Nyrt|csoport|részvény|papír)",
                 r"\bMagyar Olaj[- ]és Gázipari\b"],
     },

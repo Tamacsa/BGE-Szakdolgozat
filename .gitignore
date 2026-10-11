@@ -4,3 +4,4 @@ adat/
 __pycache__/
 .idea/
 teszt_kinyer.py
+portal_javit.py

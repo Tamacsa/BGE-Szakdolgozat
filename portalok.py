@@ -16,12 +16,14 @@ MAX_CSONKA_SOR = 5
 _SZEMET_ATTR = re.compile(
     r"(hirdet|advert|\bads?\b|banner|promo|sponsor|"
     r"newsletter|hirlevel|feliratkoz|"
-    r"paywall|premium|signature|elofizet|subscribe|regisztraci|"
+    r"(?<!non-)paywall|premium|signature|elofizet|subscribe|regisztraci|"
     r"kapcsolod|related|ajanlo|recommend|olvasta-mar|tovabbi-cikk|"
     r"social|megosztas|share|comment|hozzaszol|"
     r"cookie|consent|sidebar|breadcrumb|"
     r"konferencia|conference|event-box|investment-day|"
-    r"cimke|tag-list|author-box|szerzo-box)", re.I)
+    r"cimke|tag-list|author-box|szerzo-box)"
+
+    , re.I)
 
 _SZEMET_TAG=("script", "style", "noscript", "iframe", "form", "svg",
                "nav", "aside", "footer", "template")
@@ -64,6 +66,7 @@ def cimke_egy_utotag(portal, cfg, utotag,rx, latott, max_lap)->list[dict]:
     ablak_alatt_sorozat = 0
     ures_lap = 0
     nincs_uj = 0
+    latott_itt: set[str] = set()
 
     for lap in range(1,max_lap+1):
         url=_lap_url(alap,mod,lap)
@@ -87,24 +90,27 @@ def cimke_egy_utotag(portal, cfg, utotag,rx, latott, max_lap)->list[dict]:
                     u = cfg["base"].rstrip("/") + u
                 if rx.search(u) and not KIZART_RX.search(u):
                     talalt.append(u)
-        friss=[u for u in dict.fromkeys(talalt) if u not in latott]
+        uj_itt = [u for u in dict.fromkeys(talalt) if u not in latott_itt]
+        friss = [u for u in uj_itt if u not in latott]
 
         if not talalt:
             ures_lap += 1
             if ures_lap >= 2:
                 if lap <= 2:
-                    print(f"    [{portal}/{utotag}] nincs talalat (rossz utótag?) "
+                    print(f"    [{portal}/{utotag}] nincs találat (rossz utótag?) "
                           f"-> kihagyva")
                 break
             continue
         ures_lap = 0
 
-        if not friss:
+        if not uj_itt:
             nincs_uj += 1
             if nincs_uj >= 2:
+                print(f"    [{portal}/{utotag}] {lap}. lapnál ismétlődés -> leáll")
                 break
             continue
         nincs_uj = 0
+        latott_itt.update(uj_itt)
         latott.update(friss)
 
         lap_datumok = [d for u in talalt if (d := _url_datum(u))]
@@ -354,7 +360,7 @@ def lepes_letolt(limit=None, portal=None):
             rec = cikk_elemzo(resp.text, url, _portal_url(url))
 
             if rec["szoveg"] is None:
-                KÖ.naplo(con, url, 0, f"csonka:{rec['szoveg_forras']}")
+                KÖ.naplo(con, url, 0, f"csonka:{rec['szoveg_forras']}:{len(resp.text)}")
                 szamlalo["csonka"] += 1
                 csonka_sor += 1
                 if csonka_sor >= MAX_CSONKA_SOR:

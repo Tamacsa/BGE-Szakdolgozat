@@ -63,9 +63,7 @@ def _piaci_kontextus(szoveg:str| None) -> bool:
 def tickerek(cim_lead: str, teljes: str) ->tuple[list[str], list[str]]:
     cim_lead = cim_lead or ""
     teljes = teljes or ""
-
-    if not _piaci_kontextus(teljes):
-        return [], []
+    piaci = _piaci_kontextus(teljes)
     eros, gyenge=[],[]
 
     for t in K.TICKEREK:
@@ -74,7 +72,7 @@ def tickerek(cim_lead: str, teljes: str) ->tuple[list[str], list[str]]:
         mind= _MIND[t]
         if any(r.search(cim_lead) for r in mind):
             eros.append(t)
-        elif any(r.search(teljes) for r in mind):
+        elif piaci and any(r.search(teljes) for r in mind):
             gyenge.append(t)
     return eros, gyenge
 
@@ -316,7 +314,8 @@ SEMA="""
     norm_hash       TEXT,
     szoveg_forras   TEXT,
     raw_path        TEXT,
-    letoltve        TEXT
+    letoltve        TEXT,
+    bet_tipus       TEXT
   );   
      CREATE INDEX IF NOT EXISTS dok_ido ON dokumentum(megjelenes_utc);
      CREATE INDEX IF NOT EXISTS dok_forras ON dokumentum(forras);
