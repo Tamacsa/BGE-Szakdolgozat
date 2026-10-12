@@ -102,7 +102,8 @@ PORTALOK= {
     "telex": {
         "base": "https://telex.hu",
         "cimke_alap": "https://telex.hu/cimke",
-        "cimke_utotag": ["otp", "mol", "richter", "magyar-telekom"],
+        "cimke_utotag": ["otp", "mol", "richter", "magyar-telekom",
+                 "otp-bank", "richter-gedeon", "telekom"],
         "lapozas": "query-oldal",
         "cikk_regex": r"telex\.hu/[a-z0-9-]+(?:/[a-z0-9-]+)*/\d{4}/\d{2}/\d{2}/[a-z0-9-]+",
         "lista_szelektor": "main",
