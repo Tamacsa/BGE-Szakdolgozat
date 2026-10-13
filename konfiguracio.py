@@ -56,7 +56,7 @@ RELEVANS_KIZARO={
                 r"\bCharles Richter\b", r"\bRichter Sándor\b",
                 r"\bHans Werner Richter\b"],
     "MTELEKOM":[],
-    "OTP":[],
+    "OTP":[r"OTP\s+Bank\s+Liga"],
 
 }
 RELEVANS_PIACI=[
