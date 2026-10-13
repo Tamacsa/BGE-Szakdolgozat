@@ -8,6 +8,13 @@ from bs4 import BeautifulSoup
 import re
 
 ADATLETOLTES_URL = "https://www.portfolio.hu/adatletoltes"
+_TOKEN = None
+
+def _token(frissit: bool = False) -> str:
+    global _TOKEN
+    if _TOKEN is None or frissit:
+        _TOKEN = _friss_token()
+    return _TOKEN
 LETOLTES_URL = "https://www.portfolio.hu/adatletoltes/letoltes"
 
 SZUNNAPOK = {
@@ -49,16 +56,14 @@ def _cookie_betoltes():
 
 
 
-def _koteslista_post(ticker:str,nap:str):
-    token = _friss_token()
+def _koteslista_post(ticker: str, nap: str, frissit: bool = False):
     adat = {
-        "_token": token,
+        "_token": _token(frissit),
         "mode": "bse-boundslist",
         "boundlist-instrument": ticker,
         "boundlist-date": nap,
     }
-    return KÖ.KAPU.post(LETOLTES_URL, robots=False, data=adat)
-
+    return KÖ.KAPU.post(LETOLTES_URL, data=adat)
 
 def proba_lepes(ticker:str,nap:str | None=None):
     _cookie_betoltes()
@@ -89,9 +94,6 @@ def proba_lepes(ticker:str,nap:str | None=None):
             print(df.to_string())
     except Exception as e:
         print(f"!! Nem sikerult xlsx-kent beolvasni: {e}")
-
-
-#def letolto_lepes():
 
 def _fejlec_sor_keres(df_nyers: pd.DataFrame) -> int | None:
     for i in range(min(20, len(df_nyers))):
@@ -156,3 +158,55 @@ def koteslista_felbonto_xlsx(xlsx_bytes: bytes, ticker: str, nap: str)->list[dic
                 s["sorszam"] = n
             return sorok
     return []
+
+
+def letolto_lepes(kezd=K.KEZDO_ABLAK, veg=K.VEGSO_ABLAK, tickerek=None):
+    _cookie_betoltes()
+    con = KÖ.db()
+    tickerek = tickerek or list(K.TICKEREK)
+    napok = list(kereskedesi_napok(kezd, veg))
+    print(f"{len(tickerek)} ticker x {len(napok)} nap = "
+          f"{len(tickerek) * len(napok)} lekeres")
+    html_egymas = 0
+    for ticker in tickerek:
+        for nap in napok:
+            kulcs = f"koteslista:{ticker}:{nap}"
+            if KÖ.mar_letoltve(con, kulcs):
+                continue
+            try:
+                try:
+                    r = _koteslista_post(ticker, nap)
+                except requests.HTTPError as e:
+                    if e.response is not None and e.response.status_code == 419:
+                        r = _koteslista_post(ticker, nap, frissit=True)
+                    else:
+                        raise
+                if "html" in r.headers.get("Content-Type", "").lower():
+                    html_egymas += 1
+                    print(f"  {ticker} {nap}: HTML jott xlsx helyett "
+                          f"({html_egymas}/3)")
+                    if html_egymas >= 3:
+                        raise RuntimeError(
+                            "3 egymas utani HTML valasz - a sutik lejartak, "
+                            "exportald ujra a sutit, majd futtasd ujra.")
+                    continue
+                html_egymas = 0
+                KÖ.ment_nyers_bin("koteslista", f"{ticker}-{nap}",
+                                  r.content, kiterj="xlsx")
+                sorok = koteslista_felbonto_xlsx(r.content, ticker, nap)
+                if sorok:
+                    con.executemany(
+                        "INSERT OR REPLACE INTO kotes "
+                        "(ticker,nap,sorszam,ts_utc,ar,mennyiseg,ertek) "
+                        "VALUES (:ticker,:nap,:sorszam,:ts_utc,:ar,"
+                        ":mennyiseg,:ertek)", sorok)
+                KÖ.naplo(con, kulcs, 200, "" if sorok else "ures")
+                con.commit()
+                print(f"  {ticker} {nap}: {len(sorok)} kotes")
+            except RuntimeError:
+                raise
+            except Exception as e:
+                KÖ.naplo(con, kulcs, -1, str(e))
+                con.commit()
+                print(f"  {ticker} {nap}: HIBA {str(e)[:80]}")
+    print("kesz.")
