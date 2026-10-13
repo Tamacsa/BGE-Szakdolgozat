@@ -6,6 +6,7 @@ import konfiguracio as K
 import pandas as pd
 from bs4 import BeautifulSoup
 import re
+import requests
 
 ADATLETOLTES_URL = "https://www.portfolio.hu/adatletoltes"
 _TOKEN = None
@@ -36,7 +37,7 @@ def kereskedesi_napok(kezd:str,veg:str):
         d+=timedelta(days=1)
 
 def _friss_token()->str:
-    r = KÖ.KAPU.get(ADATLETOLTES_URL, robots=False)
+    r = KÖ.KAPU.get(ADATLETOLTES_URL)
     soup = BeautifulSoup(r.text, "lxml")
     meta = soup.find("meta", attrs={"name": "csrf-token"})
     if meta and meta.get("content"):
@@ -152,12 +153,13 @@ def koteslista_felbonto_xlsx(xlsx_bytes: bytes, ticker: str, nap: str)->list[dic
                 "ertek": forg if forg is not None else
                 ((ar * db) if (ar and db) else None),
             })
-        if sorok:
-            sorok.reverse()
-            for n, s in enumerate(sorok, start=1):
-                s["sorszam"] = n
-            return sorok
-    return []
+        if len(df) > 0 and not sorok:
+            raise ValueError("nincs ertelmezheto idopont egyik sorban sem")
+        sorok.reverse()
+        for n, s in enumerate(sorok, start=1):
+            s["sorszam"] = n
+        return sorok
+    raise ValueError("nincs fejlec egyik munkalapon sem")
 
 
 def letolto_lepes(kezd=K.KEZDO_ABLAK, veg=K.VEGSO_ABLAK, tickerek=None):
