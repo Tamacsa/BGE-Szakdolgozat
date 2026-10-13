@@ -1,5 +1,5 @@
 import io
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 
 import közös as KÖ
 import konfiguracio as K
@@ -93,4 +93,66 @@ def proba_lepes(ticker:str,nap:str | None=None):
 
 #def letolto_lepes():
 
-#ef koteslista_felbonto():
+def _fejlec_sor_keres(df_nyers: pd.DataFrame) -> int | None:
+    for i in range(min(20, len(df_nyers))):
+        sor = " ".join(str(v).lower() for v in df_nyers.iloc[i].tolist())
+        van_ido = any(k in sor for k in ("idő", "ido", "time"))
+        van_ar = any(k in sor for k in ("ár", "arfolyam", "price"))
+        if van_ido and van_ar:
+            return i
+    return None
+
+_SZAM = re.compile(r"[^\d,.\-]")
+
+def _szam(s):
+    s = _SZAM.sub("", str(s)).replace(" ", "").replace(",", ".")
+    try:
+        return float(s)
+    except ValueError:
+        return None
+
+def koteslista_felbonto_xlsx(xlsx_bytes: bytes, ticker: str, nap: str)->list[dict]:
+    xl = pd.ExcelFile(io.BytesIO(xlsx_bytes))
+    for lap in xl.sheet_names:
+        nyers=xl.parse(lap, header=None)
+        fejlec_i=_fejlec_sor_keres(nyers)
+        if fejlec_i is None:
+            continue
+        df = xl.parse(lap, header=fejlec_i)
+        oszl={str(c).strip().lower(): c for c in df.columns}
+        ido_o = next((v for k, v in oszl.items()
+                      if "idő" in k or "ido" in k or "time" in k), None)
+        ar_o = next((v for k, v in oszl.items()
+                     if k.startswith("ár") or k == "ar" or "price" in k
+                     or "árfolyam" in k), None)
+        db_o = next((v for k, v in oszl.items()
+                     if "darab" in k or "mennyi" in k or "volume" in k
+                     or "kötésszám" in k or "kotesszam" in k), None)
+        forg_o = next((v for k, v in oszl.items()
+                       if "forgalom" in k or "érték" in k or "ertek" in k), None)
+        if not (ido_o and ar_o):
+            continue
+        sorok=[]
+        for i, r in df.iterrows():
+            ido = str(r[ido_o]).strip()
+            m = re.search(r"(\d{1,2}):(\d{2})(?::(\d{2}))?", ido)
+            if not m:
+                continue
+            dt = datetime.fromisoformat(nap).replace(
+                hour=int(m.group(1)), minute=int(m.group(2)),
+                second=int(m.group(3) or 0))
+            ar = _szam(r[ar_o])
+            db = _szam(r[db_o]) if db_o else None
+            forg = _szam(r[forg_o]) if forg_o else None
+            sorok.append({
+                "ticker": ticker, "nap": nap, "sorszam": int(i),
+                "ts_utc": KÖ.iso(KÖ.utc(dt)), "ar": ar, "mennyiseg": db,
+                "ertek": forg if forg is not None else
+                ((ar * db) if (ar and db) else None),
+            })
+        if sorok:
+            sorok.reverse()
+            for n, s in enumerate(sorok, start=1):
+                s["sorszam"] = n
+            return sorok
+    return []
