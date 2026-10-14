@@ -122,3 +122,8 @@ COOKIE_FAJL= ADAT / "portfolio_cookies.json"
 PORTAL_SUTIK ={
     'portfolio':COOKIE_FAJL
 }
+
+BEAGYAZO_MODELL = "intfloat/multilingual-e5-small"
+BEAGYAZO_MAX_KAR = 2000
+BEAGYAZO_PREFIX = "query: "
+BEAGYAZO_MIN_KAR = 20
