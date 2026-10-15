@@ -212,3 +212,7 @@ def letolto_lepes(kezd=K.KEZDO_ABLAK, veg=K.VEGSO_ABLAK, tickerek=None):
                 con.commit()
                 print(f"  {ticker} {nap}: HIBA {str(e)[:80]}")
     print("kesz.")
+
+
+
+    
