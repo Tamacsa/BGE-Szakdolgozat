@@ -31,9 +31,6 @@ def _bemenet(forras, cim, lead, szoveg) -> str | None:
 def _kodol(vek) -> bytes:
     return np.asarray(vek, dtype=np.float32).tobytes()
 
-def _dekodol(blob: bytes) -> np.ndarray:
-    return np.frombuffer(blob, dtype=np.float32)
-
 
 def beagyazo_lepes(kotegmeret:int=64):
     con = KÖ.db()

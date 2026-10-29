@@ -11,11 +11,14 @@ import requests
 ADATLETOLTES_URL = "https://www.portfolio.hu/adatletoltes"
 _TOKEN = None
 
+
 def _token(frissit: bool = False) -> str:
     global _TOKEN
     if _TOKEN is None or frissit:
         _TOKEN = _friss_token()
     return _TOKEN
+
+
 LETOLTES_URL = "https://www.portfolio.hu/adatletoltes/letoltes"
 
 SZUNNAPOK = {
@@ -25,18 +28,18 @@ SZUNNAPOK = {
     "2025-01-01", "2025-04-18", "2025-04-21", "2025-05-01", "2025-06-09",
     "2025-08-20", "2025-10-23", "2025-11-01", "2025-12-24", "2025-12-25",
     "2025-12-26", "2025-12-31",
-    "2026-01-01", "2026-04-03", "2026-04-06", "2026-05-01", "2026-05-25",
-    "2026-08-20", "2026-10-23", "2026-12-24", "2026-12-25", "2026-12-31",
 }
 
-def kereskedesi_napok(kezd:str,veg:str):
-    d,v=date.fromisoformat(kezd),date.fromisoformat(veg)
-    while d<=v:
-        if d.weekday()<5 and d.isoformat() not in SZUNNAPOK:
-            yield d.isoformat()
-        d+=timedelta(days=1)
 
-def _friss_token()->str:
+def kereskedesi_napok(kezd: str, veg: str):
+    d, v = date.fromisoformat(kezd), date.fromisoformat(veg)
+    while d <= v:
+        if d.weekday() < 5 and d.isoformat() not in SZUNNAPOK:
+            yield d.isoformat()
+        d += timedelta(days=1)
+
+
+def _friss_token() -> str:
     r = KÖ.KAPU.get(ADATLETOLTES_URL)
     soup = BeautifulSoup(r.text, "lxml")
     meta = soup.find("meta", attrs={"name": "csrf-token"})
@@ -56,7 +59,6 @@ def _cookie_betoltes():
     return KÖ.KAPU
 
 
-
 def _koteslista_post(ticker: str, nap: str, frissit: bool = False):
     adat = {
         "_token": _token(frissit),
@@ -66,7 +68,8 @@ def _koteslista_post(ticker: str, nap: str, frissit: bool = False):
     }
     return KÖ.KAPU.post(LETOLTES_URL, data=adat)
 
-def proba_lepes(ticker:str,nap:str | None=None):
+
+def proba_lepes(ticker: str, nap: str | None = None):
     _cookie_betoltes()
     nap = nap or next(kereskedesi_napok(
         (date.today() - timedelta(days=7)).isoformat(),
@@ -96,6 +99,7 @@ def proba_lepes(ticker:str,nap:str | None=None):
     except Exception as e:
         print(f"!! Nem sikerult xlsx-kent beolvasni: {e}")
 
+
 def _fejlec_sor_keres(df_nyers: pd.DataFrame) -> int | None:
     for i in range(min(20, len(df_nyers))):
         sor = " ".join(str(v).lower() for v in df_nyers.iloc[i].tolist())
@@ -105,7 +109,9 @@ def _fejlec_sor_keres(df_nyers: pd.DataFrame) -> int | None:
             return i
     return None
 
+
 _SZAM = re.compile(r"[^\d,.\-]")
+
 
 def _szam(s):
     s = _SZAM.sub("", str(s)).replace(" ", "").replace(",", ".")
@@ -114,15 +120,16 @@ def _szam(s):
     except ValueError:
         return None
 
-def koteslista_felbonto_xlsx(xlsx_bytes: bytes, ticker: str, nap: str)->list[dict]:
+
+def koteslista_felbonto_xlsx(xlsx_bytes: bytes, ticker: str, nap: str) -> list[dict]:
     xl = pd.ExcelFile(io.BytesIO(xlsx_bytes))
     for lap in xl.sheet_names:
-        nyers=xl.parse(lap, header=None)
-        fejlec_i=_fejlec_sor_keres(nyers)
+        nyers = xl.parse(lap, header=None)
+        fejlec_i = _fejlec_sor_keres(nyers)
         if fejlec_i is None:
             continue
         df = xl.parse(lap, header=fejlec_i)
-        oszl={str(c).strip().lower(): c for c in df.columns}
+        oszl = {str(c).strip().lower(): c for c in df.columns}
         ido_o = next((v for k, v in oszl.items()
                       if "idő" in k or "ido" in k or "time" in k), None)
         ar_o = next((v for k, v in oszl.items()
@@ -135,7 +142,7 @@ def koteslista_felbonto_xlsx(xlsx_bytes: bytes, ticker: str, nap: str)->list[dic
                        if "forgalom" in k or "érték" in k or "ertek" in k), None)
         if not (ido_o and ar_o):
             continue
-        sorok=[]
+        sorok = []
         for i, r in df.iterrows():
             ido = str(r[ido_o]).strip()
             m = re.search(r"(\d{1,2}):(\d{2})(?::(\d{2}))?", ido)
@@ -215,4 +222,3 @@ def letolto_lepes(kezd=K.KEZDO_ABLAK, veg=K.VEGSO_ABLAK, tickerek=None):
 
 
 
-    

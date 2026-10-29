@@ -4,7 +4,6 @@ from collections import Counter
 from datetime import datetime, timezone
 from urllib.parse import urlparse
 
-import requests
 from bs4 import BeautifulSoup
 
 import közös as KÖ
@@ -38,13 +37,8 @@ _PROMO_SOR = re.compile(
 
 
 def _lap_url(alap:str,mod:str,lap:int)->str:
-    if mod=="path-page":
-        return f"{alap}/" if lap == 1 else f"{alap}/page/{lap}/" #economx
     if lap==1:
         return alap
-    if mod=="path":
-        return f"{alap}/{lap}"
-
     if mod =="query-oldal":
         return f"{alap}?oldal={lap}"
     return f"{alap}?page={lap}"
@@ -209,6 +203,43 @@ def _tag_szoveg(soup:BeautifulSoup)->str|None:
             return szoveg
     return None
 
+MIN_TORZS_ROVID = 25
+_CIKK_TORZS = "article.pfarticle .pfarticle-section-content"
+_TORZS_SZOVEG_TAG = ("p", "ul", "ol", "h2", "h3", "h4", "blockquote")
+_TORZS_KIHAGY = re.compile(
+    r"(disclaimer|conference|adocean|inline-chart|chart-|related|"
+    r"trader-ad|newsletter|hirlevel)", re.I)
+
+def _torzs_elemek(soup:BeautifulSoup):
+    """A cikk tárolójának szöveges blokkjai (p, ul/ol, alcím, idézet), sorrendben.
+    A reklám-, grafikon-, ajánló- és jogi blokkokat kihagyja. A szöveg-kinyerés
+    és a hivatkozás-kinyerés (hivatkozasok.py) is ezt használja, hogy mindkettő
+    pontosan ugyanazt a törzset lássa."""
+    kontener = soup.select_one(_CIKK_TORZS)
+    if kontener is None:
+        return
+
+    def bejar(elem):
+        for gyerek in elem.find_all(recursive=False):
+            osztaly = " ".join(gyerek.get("class") or []) + " " + str(gyerek.get("id") or "")
+            if _TORZS_KIHAGY.search(osztaly):
+                continue
+            if gyerek.name in _TORZS_SZOVEG_TAG:
+                yield gyerek
+            elif gyerek.name == "div":
+                yield from bejar(gyerek)
+
+    yield from bejar(kontener)
+
+def _torzs_szoveg(soup:BeautifulSoup)->str|None:
+    sorok: list[str] = []
+    for elem in _torzs_elemek(soup):
+        if elem.name in ("ul", "ol"):
+            sorok.extend(li.get_text(" ", strip=True) for li in elem.find_all("li"))
+        else:
+            sorok.append(elem.get_text(" ", strip=True))
+    return "\n".join(s for s in sorok if s) or None
+
 def _szohossz(szoveg: str | None)->int:
     return len(str(szoveg or "").split())
 
@@ -234,6 +265,12 @@ def _portal_sutik(portal:str)->bool:
 
 def kinyer_szoveg(html:str)->tuple[str|None,str]:
     nyers_soup = BeautifulSoup(html, "lxml")
+
+    if (torzs := _torzs_szoveg(nyers_soup)):
+        szurt = _promo_szures(torzs)
+        if _szohossz(szurt) >= MIN_TORZS_ROVID:
+            return szurt, "cikk-torzs"
+
     tiszta_soup = _takarit(html)
     tiszta_html = str(tiszta_soup)
 
