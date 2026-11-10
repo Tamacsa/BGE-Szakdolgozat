@@ -468,14 +468,12 @@ def kozzetetel_elemzo(html:str, url:str, lista_meta:dict | None= None)->dict:
         teljes_szoveg = szoveg_html
         szoveg_forras = "html"
 
-    eros, gyenge = KÖ.tickerek(cim or "", f"{cim} {teljes_szoveg}")
-
-    if lista_meta:
-        lista_ticker = _KIBOCSATO_TICKER.get((lista_meta.get("kibocsato") or "").strip())
-        if lista_ticker and lista_ticker not in eros:
-            eros.append(lista_ticker)
-        if lista_ticker and lista_ticker in gyenge:
-            gyenge.remove(lista_ticker)
+    kibocsato = ((lista_meta or {}).get("kibocsato") or "").strip()
+    lista_ticker = _KIBOCSATO_TICKER.get(kibocsato)
+    if lista_ticker is None:
+        raise ValueError(
+            f"ismeretlen vagy hiányzó BET-kibocsátó: {kibocsato!r} ({url})")
+    eros, gyenge = [lista_ticker], []
     return {
         "doc_id": KÖ.doc_id(url), "forras": "bet", "tipus": "kozzetetel",
         "url": url, "cim": cim, "bet_tipus": bet_tipus, "lead": None, "szoveg": teljes_szoveg,
@@ -483,9 +481,7 @@ def kozzetetel_elemzo(html:str, url:str, lista_meta:dict | None= None)->dict:
         "megjelenes_utc": KÖ.iso(megj),
         "megjelenes_helyi": megj.astimezone(K.IZ).isoformat() if megj else None,
         "ido_forras": ido_forras, "ido_pontossag": pont,
-        "ticker_eros": eros, "ticker_gyenge": gyenge,
-        "norm_hash": KÖ.hash_szoveg(f"{cim} {teljes_szoveg}"),
-        "szoveg_forras": szoveg_forras,
+        "ticker_eros": eros, "ticker_gyenge": gyenge,        "szoveg_forras": szoveg_forras,
         "letoltve": KÖ.iso(datetime.now(timezone.utc)),
     }
 

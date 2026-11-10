@@ -211,10 +211,6 @@ _TORZS_KIHAGY = re.compile(
     r"trader-ad|newsletter|hirlevel)", re.I)
 
 def _torzs_elemek(soup:BeautifulSoup):
-    """A cikk tárolójának szöveges blokkjai (p, ul/ol, alcím, idézet), sorrendben.
-    A reklám-, grafikon-, ajánló- és jogi blokkokat kihagyja. A szöveg-kinyerés
-    és a hivatkozás-kinyerés (hivatkozasok.py) is ezt használja, hogy mindkettő
-    pontosan ugyanazt a törzset lássa."""
     kontener = soup.select_one(_CIKK_TORZS)
     if kontener is None:
         return
@@ -362,7 +358,6 @@ def cikk_elemzo(html:str,url:str,portal:str)->dict:
         "ido_forras": ido_forras, "ido_pontossag": pont,
         "modositas_utc": KÖ.iso(mod),
         "ticker_eros": eros, "ticker_gyenge": gyenge,
-        "norm_hash": KÖ.hash_szoveg(teljes), "szoveg_forras": sz_forras,
         "letoltve": KÖ.iso(datetime.now(timezone.utc)),
     }
 

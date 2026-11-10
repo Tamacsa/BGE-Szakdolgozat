@@ -23,7 +23,6 @@ def _uj_rekord(r, html: str) -> dict | None:
         "szoveg": szoveg,
         "szohossz": portalok._szohossz(szoveg),
         "szoveg_forras": forras,
-        "norm_hash": KÖ.hash_szoveg(teljes),
         "ticker_eros": json.dumps(eros, ensure_ascii=False),
         "ticker_gyenge": json.dumps(gyenge, ensure_ascii=False),
     }

@@ -107,11 +107,6 @@ def bet_szoveg_tisztit(s: str | None) -> str:
     return re.sub(r"\s+", " ", s).strip()
 
 
-def hash_szoveg(s: str | None) -> str | None:
-    n = normalizal(s)
-    return hashlib.sha1(n.encode()).hexdigest() if n else None
-
-
 def doc_id(url: str) -> str:
     return hashlib.sha1(url.encode()).hexdigest()[:20]
 
@@ -240,7 +235,7 @@ def sutik_betolt(fajl, alap_domain: str = ".portfolio.hu") -> int:
 SEMA = """
     PRAGMA journal_mode=WAL;
 
-    CREATE TABLE IF NOT EXISTS dokumentum (
+        CREATE TABLE IF NOT EXISTS dokumentum (
     doc_id          TEXT PRIMARY KEY,
     forras          TEXT NOT NULL,
     tipus           TEXT NOT NULL,
@@ -256,15 +251,13 @@ SEMA = """
     modositas_utc   TEXT,
     ticker_eros     TEXT,
     ticker_gyenge   TEXT,
-    norm_hash       TEXT,
     szoveg_forras   TEXT,
     raw_path        TEXT,
     letoltve        TEXT,
     bet_tipus       TEXT
-  );   
+  );    
      CREATE INDEX IF NOT EXISTS dok_ido ON dokumentum(megjelenes_utc);
      CREATE INDEX IF NOT EXISTS dok_forras ON dokumentum(forras);
-     CREATE INDEX IF NOT EXISTS dok_hash ON dokumentum(norm_hash);
 
     CREATE TABLE IF NOT EXISTS naplo (
     url             TEXT PRIMARY KEY,
@@ -391,6 +384,7 @@ SEMA = """
     """
 
 
+
 def db() -> sqlite3.Connection:
     con = sqlite3.connect(K.ADATBAZIS, timeout=60)
     con.row_factory = sqlite3.Row
@@ -401,22 +395,16 @@ def db() -> sqlite3.Connection:
     return con
 
 
-def ment_dokumentum(con, rec: dict):
-    rec = dict(rec)
+def ment_dokumentum(con, rec:dict):
+    rec=dict(rec)
     for k in ("ticker_eros", "ticker_gyenge"):
         if isinstance(rec.get(k), (list, tuple)):
             rec[k] = json.dumps(rec[k], ensure_ascii=False)
-    oszlopok = [r[1] for r in con.execute("PRAGMA table_info(dokumentum)")]
-    rec = {k: v for k, v in rec.items() if k in oszlopok}
-    if "doc_id" in rec and "norm_hash" in rec:
-        regi = con.execute("SELECT norm_hash FROM dokumentum WHERE doc_id=?",
-                           (rec["doc_id"],)).fetchone()
-        if regi and regi["norm_hash"] != rec["norm_hash"]:
-            con.execute("DELETE FROM beagyazas WHERE doc_id=?", (rec["doc_id"],))
-    q = (f"INSERT OR REPLACE INTO dokumentum({','.join(rec)}) "
-         f"VALUES ({','.join('?' * len(rec))})")
+    oszlopok=[r[1] for r in con.execute("PRAGMA table_info(dokumentum)")]
+    rec={k: v for k, v in rec.items() if k in oszlopok}
+    q=(f"INSERT OR REPLACE INTO dokumentum({','.join(rec)}) "
+       f"VALUES ({','.join('?'* len(rec))})")
     con.execute(q, list(rec.values()))
-
 
 def naplo(con, url, statusz=None, hiba=None):
     con.execute("INSERT OR REPLACE INTO naplo VALUES (?,?,?,?)",
