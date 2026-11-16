@@ -88,13 +88,11 @@ def ujratisztit(alkalmaz: bool = False):
                 (uj["szoveg"], uj["szohossz"], uj["szoveg_forras"],
                  uj["norm_hash"], uj["ticker_eros"], uj["ticker_gyenge"],
                  doc_id))
-            con.execute("DELETE FROM beagyazas WHERE doc_id=?", (doc_id,))
         con.commit()
     except Exception:
         con.rollback()
         raise
     print(f"{len(valtozott)} cikk átírva; a hozzájuk tartozó beágyazások törölve.")
-    print("Következő lépés: beagyazas.beagyazo_lepes().")
 
 
 if __name__ == "__main__":

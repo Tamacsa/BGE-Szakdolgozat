@@ -287,13 +287,7 @@ SEMA = """
 
     CREATE INDEX IF NOT EXISTS kotes_ts ON kotes(ticker, ts_utc);
 
-    CREATE TABLE IF NOT EXISTS beagyazas (
-    doc_id         TEXT NOT NULL,
-    modell         TEXT NOT NULL,
-    vek            BLOB NOT NULL,
-    PRIMARY KEY (doc_id, modell) 
-    );
-
+    
     CREATE TABLE IF NOT EXISTS hivatkozas (
     doc_id          TEXT NOT NULL,
     cel_url         TEXT NOT NULL,
