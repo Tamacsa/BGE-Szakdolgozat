@@ -357,7 +357,7 @@ def cikk_elemzo(html:str,url:str,portal:str)->dict:
         "megjelenes_helyi": megj.astimezone(K.IZ).isoformat() if megj else None,
         "ido_forras": ido_forras, "ido_pontossag": pont,
         "modositas_utc": KÖ.iso(mod),
-        "ticker_eros": eros, "ticker_gyenge": gyenge,
+        "ticker_eros": eros, "ticker_gyenge": gyenge, "szoveg_forras": sz_forras,
         "letoltve": KÖ.iso(datetime.now(timezone.utc)),
     }
 

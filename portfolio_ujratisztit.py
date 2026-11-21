@@ -84,15 +84,15 @@ def ujratisztit(alkalmaz: bool = False):
         for doc_id, uj in valtozott:
             con.execute(
                 "UPDATE dokumentum SET szoveg=?, szohossz=?, szoveg_forras=?, "
-                "norm_hash=?, ticker_eros=?, ticker_gyenge=? WHERE doc_id=?",
+                "ticker_eros=?, ticker_gyenge=? WHERE doc_id=?",
                 (uj["szoveg"], uj["szohossz"], uj["szoveg_forras"],
-                 uj["norm_hash"], uj["ticker_eros"], uj["ticker_gyenge"],
+                 uj["ticker_eros"], uj["ticker_gyenge"],
                  doc_id))
         con.commit()
     except Exception:
         con.rollback()
         raise
-    print(f"{len(valtozott)} cikk átírva; a hozzájuk tartozó beágyazások törölve.")
+    print(f"{len(valtozott)} cikk átírva.")
 
 
 if __name__ == "__main__":
