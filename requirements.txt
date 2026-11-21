@@ -48,9 +48,7 @@ regex==2026.9.29
 requests==2.34.2
 rich==15.0.0
 safetensors==0.8.0
-scikit-learn==1.9.1
 scipy==1.18.1
-sentence-transformers==6.1.0
 setuptools==84.0.0
 shellingham==1.5.4
 six==1.17.0
@@ -70,3 +68,7 @@ tzdata==2026.4
 tzlocal==5.4.4
 urljoin==1.0.0
 urllib3==2.8.0
+ipython==7.9.0
+matplotlib==3.11
+numpy==2.5.0
+pandas==3.1.0

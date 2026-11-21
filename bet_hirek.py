@@ -425,6 +425,16 @@ def _pdf_feldolgozas(pdf_url:str)->tuple[str| None,str|None]:
         print(f" a pdf üres, vagy scannelt és nincs szöveg réteg : {nyers_ut}")
     return (szoveg or None), nyers_ut
 
+MELLEKLET_KITERJESZTES = (".pdf", ".xlsx", ".xls", ".zip", ".doc", ".docx", ".xhtml")
+NINCS_SZOVEG = ("html (pdf-hiba)", "html (melléklet)")
+
+
+def melleklet_urlok(tartalom, url:str)->list[str]:
+    return list(dict.fromkeys(
+        urljoin(url, a["href"]) for a in tartalom.select("a[href]")
+        if a["href"].lower().split("?")[0].endswith(MELLEKLET_KITERJESZTES)
+    ))
+
 def kozzetetel_elemzo(html:str, url:str, lista_meta:dict | None= None)->dict:
     soup = BeautifulSoup(html, "lxml")
     for t in soup(["script", "style", "nav", "footer"]):
@@ -464,6 +474,9 @@ def kozzetetel_elemzo(html:str, url:str, lista_meta:dict | None= None)->dict:
     elif pdf_urlok:
         teljes_szoveg = szoveg_html
         szoveg_forras = "html (pdf-hiba)"
+    elif melleklet_urlok(tartalom, url):
+        teljes_szoveg = szoveg_html
+        szoveg_forras = "html (melléklet)"
     else:
         teljes_szoveg = szoveg_html
         szoveg_forras = "html"
@@ -500,8 +513,11 @@ def lepes_letolt():
             resp=KÖ.KAPU.get(url)
             rec=kozzetetel_elemzo(resp.text, url, lista_meta=lista_meta)
             rec["raw_path"] = KÖ.ment_nyers("bet", url, resp.text)
-            KÖ.ment_dokumentum(con, rec)
-            KÖ.naplo(con, url, resp.status_code)
+            if rec["szoveg_forras"] in NINCS_SZOVEG:
+                KÖ.naplo(con, url, resp.status_code, f"kizárva: nincs szöveg ({rec['szoveg_forras']})")
+            else:
+                KÖ.ment_dokumentum(con, rec)
+                KÖ.naplo(con, url, resp.status_code)
 
         except Exception as e:
             KÖ.naplo(con, url, -1, str(e))
