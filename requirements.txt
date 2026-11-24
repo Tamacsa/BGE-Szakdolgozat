@@ -14,11 +14,9 @@ filelock==4.1.1
 fsspec==2026.9.0
 greenlet==3.5.6
 h11==0.16.0
-hf-xet==1.7.0
 htmldate==1.11.0
 httpcore==1.0.9
 httpx==0.28.1
-huggingface_hub==1.33.0
 idna==3.19
 Jinja2==3.1.6
 joblib==1.6.0
@@ -34,7 +32,6 @@ networkx==3.7
 numpy==2.5.3
 openpyxl==3.1.5
 packaging==26.3
-pandas==3.0.6
 path==17.1.1
 playwright==1.63.0
 pyee==13.0.1
@@ -47,7 +44,6 @@ PyYAML==6.0.3
 regex==2026.9.29
 requests==2.34.2
 rich==15.0.0
-safetensors==0.8.0
 scipy==1.18.1
 setuptools==84.0.0
 shellingham==1.5.4
@@ -57,18 +53,14 @@ soupsieve==2.9.2
 sympy==1.14.0
 threadpoolctl==3.7.0
 tld==0.13.2
-tokenizers==0.23.3
-torch==2.14.1
 tqdm==4.70.1
 trafilatura==2.3.1
-transformers==5.19.0
 typer==0.27.3
 typing_extensions==4.16.0
 tzdata==2026.4
 tzlocal==5.4.4
+pyarrow==26.0.0
 urljoin==1.0.0
 urllib3==2.8.0
-ipython==7.9.0
 matplotlib==3.11
-numpy==2.5.0
 pandas==3.1.0
